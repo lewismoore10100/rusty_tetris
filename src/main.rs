@@ -1,6 +1,12 @@
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
-use blue_engine::{header::Engine, WindowDescriptor};
+use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
+
+use crate::game_engine_setup::{FramerateLimiter, setup_engine};
+use crate::tetris_block::TetrisBlock;
+
+mod game_engine_setup;
+mod tetris_block;
 
 fn main() {
     let mut rendering_engine = setup_engine();
@@ -9,41 +15,59 @@ fn main() {
     rendering_engine
         .update_loop(move |renderer, _window, objects, input, camera, plugins| {
             game_speed.tick(||{
-                println!("tick");
+                objects.clear();
+
+                to_blocks().iter().for_each(|block|{
+                    render_block(block, objects, renderer);
+                })
             })
         })
         .expect("Error during update loop");
 }
 
-struct FramerateLimiter {
-    last_time : Instant,
-    tick_count: i64,
-    frames_per_duration: Duration
+
+
+
+pub fn render_block(block: &TetrisBlock, mut objects: &mut ObjectStorage, renderer: &mut Renderer) {
+    objects.new_object(
+        block.name(),
+        vec![
+            Vertex {
+                position: [0.2, 0.2, 0.0],
+                uv: [1.0, 1.0],
+                normal: [0f32, 0f32, 0f32],
+            },
+            Vertex {
+                position: [0.2, -0.2, 0.0],
+                uv: [1.0, 0.0],
+                normal: [0f32, 0f32, 0f32],
+            },
+            Vertex {
+                position: [-0.2, -0.2, 0.0],
+                uv: [0.0, 1.0],
+                normal: [0f32, 0f32, 0f32],
+            },
+            Vertex {
+                position: [-0.2, 0.2, 0.0],
+                uv: [0.0, 0.0],
+                normal: [0f32, 0f32, 0f32],
+            },
+        ],
+        vec![2, 1, 0, 2, 0, 3],
+        ObjectSettings {
+            camera_effect: false,
+            ..Default::default()
+        },
+        renderer,
+    ).unwrap();
+    let block_in_scene = objects.get_mut(&block.name()).unwrap();
+    block_in_scene.position.x += 1.0;
+    block_in_scene.position.y += 1.0;
+
+}
+pub fn to_blocks() -> Vec<TetrisBlock> {
+    vec![TetrisBlock{x: 0, y:0}]
 }
 
-impl FramerateLimiter {
-    pub fn new(frames_per_duration: Duration) -> FramerateLimiter {
-        FramerateLimiter {
-            last_time: Instant::now(),
-            tick_count: 0,
-            frames_per_duration
-        }
-    }
-    pub fn tick(&mut self, f: fn()){
-        let current_time = Instant::now();
-        if current_time - self.last_time >= self.frames_per_duration {
-            self.tick_count += 1;
-            self.last_time = current_time;
-            f();
-        }
-    }
-}
 
-fn setup_engine() -> Engine {
-     return Engine::new_config(WindowDescriptor {
-        width: 600,
-        height: 800,
-        title: "Rusty Tetris",
-        ..Default::default()
-    }).expect("engine couldn't be initialized");
-}
+
