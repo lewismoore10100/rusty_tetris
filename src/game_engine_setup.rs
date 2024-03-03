@@ -1,3 +1,4 @@
+use std::thread;
 use std::time::{Duration, Instant};
 use blue_engine::{Engine, WindowDescriptor};
 
@@ -21,6 +22,9 @@ impl FramerateLimiter {
             self.tick_count += 1;
             self.last_time = current_time;
             f();
+        }
+        else {
+            thread::sleep(Duration::from_millis(self.frames_per_duration.as_millis() as u64));
         }
     }
 }
