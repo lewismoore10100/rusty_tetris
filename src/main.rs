@@ -1,15 +1,18 @@
-use std::time::Duration;
-
-use crate::game_engine_setup::{FramerateLimiter, setup_engine};
-use crate::render_block::render_block;
-use crate::tetris_block::TetrisBlock;
-
 mod game_engine_setup;
 mod tetris_block;
 mod render_block;
+mod tetris_engine;
+
+use std::time::Duration;
+use crate::game_engine_setup::{FramerateLimiter, setup_engine};
+use crate::render_block::render_block;
+use crate::tetris_block::TetrisBlock;
+use crate::tetris_engine::TetrisEngine;
 
 fn main() {
     let rendering_engine = setup_engine();
+
+    let tetris_engine = TetrisEngine::new();
 
     let mut game_speed = FramerateLimiter::new(Duration::from_secs(1));
     rendering_engine
@@ -17,16 +20,12 @@ fn main() {
             game_speed.tick(||{
                 objects.clear();
 
-                to_blocks().iter().for_each(|block|{
+                tetris_engine.generate_blocks().iter().for_each(|block|{
                     render_block(block, objects, renderer);
                 })
             })
         })
         .expect("Error during update loop");
-}
-
-pub fn to_blocks() -> Vec<TetrisBlock> {
-    vec![TetrisBlock{x: 0, y:0}, TetrisBlock{x: 2, y: 0}]
 }
 
 
