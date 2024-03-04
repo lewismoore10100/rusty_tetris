@@ -1690,7 +1690,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustyTetris"
+name = "rusty_tetris"
 version = "0.1.0"
 dependencies = [
  "blue_engine",
