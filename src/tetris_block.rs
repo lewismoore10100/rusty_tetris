@@ -1,4 +1,4 @@
-#[derive(Eq, Hash, PartialEq)]
+#[derive(Eq, Hash, PartialEq, Clone)]
 pub struct TetrisBlock {
     pub x: u32,
     pub y: u32

@@ -8,6 +8,7 @@ mod game_engine_setup;
 mod tetris_block;
 mod render_block;
 mod tetris_engine;
+mod square;
 
 fn main() {
     let rendering_engine = setup_engine();

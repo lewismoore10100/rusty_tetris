@@ -1,5 +1,6 @@
 mod tetris_engine;
 mod tetris_block;
+mod square;
 
 #[cfg(test)]
 mod tests {
