@@ -21,6 +21,23 @@ mod tests {
 
     }
 
+    #[test]
+    fn incrementing_tick_moves_the_current_square_down() {
+        let mut tetris_engine = TetrisEngine::new();
+
+        tetris_engine.tick();
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+                          &vec![
+                              TetrisBlock{x: 4, y: 18},
+                              TetrisBlock{x: 5, y: 18},
+                              TetrisBlock{x: 4, y: 17},
+                              TetrisBlock{x: 5, y: 17},
+                          ]
+        ))
+
+    }
+
 
     fn are_equal(actual: &Vec<TetrisBlock>, expected: &Vec<TetrisBlock>) -> bool{
         actual == expected
