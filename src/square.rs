@@ -7,10 +7,10 @@ pub struct Square {
 impl Square {
     pub(crate) fn new() -> Square {
         Square{blocks: [
-            TetrisBlock{x: 4, y: 19},
-            TetrisBlock{x: 5, y: 19},
-            TetrisBlock{x: 4, y: 18},
-            TetrisBlock{x: 5, y: 18}
+            TetrisBlock::new(4, 19),
+            TetrisBlock::new(5, 19),
+            TetrisBlock::new(4, 18),
+            TetrisBlock::new(5, 18)
         ]}
     }
 

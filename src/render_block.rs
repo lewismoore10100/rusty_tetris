@@ -2,8 +2,9 @@ use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
 use crate::tetris_block::TetrisBlock;
 
 pub fn render_block(block: &TetrisBlock, objects: &mut ObjectStorage, renderer: &mut Renderer) {
+
     objects.new_object(
-        block.name(),
+        String::from(&block.id),
         vec![
             Vertex {
                 position: [0.0, 0.0, 0.0],
@@ -33,6 +34,6 @@ pub fn render_block(block: &TetrisBlock, objects: &mut ObjectStorage, renderer: 
         },
         renderer,
     ).unwrap();
-    let block_in_scene = objects.get_mut(&block.name()).unwrap();
+    let block_in_scene = objects.get_mut(&block.id).unwrap();
     block_in_scene.set_position((-1.0)+(block.x as f32/10.0), (-1.0)+(block.y as f32/10.0), 0.0);
 }

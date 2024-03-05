@@ -13,10 +13,10 @@ mod tests {
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
     &vec![
-                    TetrisBlock{x: 4, y: 19},
-                    TetrisBlock{x: 5, y: 19},
-                    TetrisBlock{x: 4, y: 18},
-                    TetrisBlock{x: 5, y: 18},
+                    TetrisBlock::new(4, 19),
+                    TetrisBlock::new(5, 19),
+                    TetrisBlock::new(4, 18),
+                    TetrisBlock::new(5, 18)
             ]
         ))
 
@@ -30,17 +30,15 @@ mod tests {
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
                           &vec![
-                              TetrisBlock{x: 4, y: 18},
-                              TetrisBlock{x: 5, y: 18},
-                              TetrisBlock{x: 4, y: 17},
-                              TetrisBlock{x: 5, y: 17},
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(5, 17),
                           ]
         ))
-
     }
 
-
     fn are_equal(actual: &Vec<TetrisBlock>, expected: &Vec<TetrisBlock>) -> bool{
-        actual == expected
+        actual.iter().zip(expected.iter()).filter(|&(a, b)| !a.same_position(b)).count() == 0
     }
 }
