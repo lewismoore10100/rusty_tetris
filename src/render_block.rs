@@ -2,7 +2,6 @@ use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
 use crate::tetris_block::TetrisBlock;
 
 pub fn render_block(block: &TetrisBlock, objects: &mut ObjectStorage, renderer: &mut Renderer) {
-
     objects.new_object(
         String::from(&block.id),
         vec![
