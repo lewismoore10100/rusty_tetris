@@ -24,14 +24,14 @@ impl FramerateLimiter {
             f();
         }
         else {
-            thread::sleep(Duration::from_millis(self.frames_per_duration.as_millis() as u64));
+            thread::sleep(Duration::from_millis(25));
         }
     }
 }
 
 pub fn setup_engine() -> Engine {
     return Engine::new_config(WindowDescriptor {
-        width: 600,
+        width: 400,
         height: 800,
         title: "Rusty Tetris",
         ..Default::default()
