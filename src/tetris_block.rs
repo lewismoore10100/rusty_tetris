@@ -1,6 +1,7 @@
 use rand::Rng;
+use serde::Serialize;
 
-#[derive(Eq, Hash, PartialEq, Clone)]
+#[derive(Eq, Hash, PartialEq, Clone, Serialize)]
 pub struct TetrisBlock {
     pub x: u32,
     pub y: u32,
