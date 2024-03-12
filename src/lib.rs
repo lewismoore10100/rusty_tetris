@@ -46,10 +46,10 @@ mod tests {
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
                   &vec![
+                      TetrisBlock::new(4, 19),
+                      TetrisBlock::new(5, 19),
                       TetrisBlock::new(4, 18),
                       TetrisBlock::new(5, 18),
-                      TetrisBlock::new(4, 17),
-                      TetrisBlock::new(5, 17),
                       TetrisBlock::new(4, 1),
                       TetrisBlock::new(5, 1),
                       TetrisBlock::new(4, 0),
