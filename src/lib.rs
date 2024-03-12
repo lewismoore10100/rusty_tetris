@@ -1,9 +1,11 @@
 mod tetris_engine;
 mod tetris_block;
 mod square;
+mod test_utils;
 
 #[cfg(test)]
 mod tests {
+    use crate::test_utils::{are_equal, run};
     use crate::tetris_block::TetrisBlock;
     use crate::tetris_engine::TetrisEngine;
 
@@ -56,26 +58,5 @@ mod tests {
                       TetrisBlock::new(5, 0),
                   ]
         ));
-    }
-
-    fn run<F: FnMut() -> ()>(mut f: F, times: u32){
-        for _n in 0..times{
-            f();
-        }
-    }
-
-    fn are_equal(actual: &Vec<&TetrisBlock>, expected: &Vec<TetrisBlock>) -> bool{
-        let is_equal = actual.iter().zip(expected.iter()).filter(|&(a, b)| !a.same_position(b)).count() == 0;
-
-        if !is_equal {
-            eprintln!("{}", "Actual:");
-            serde_json::to_writer_pretty(std::io::stderr(), actual).unwrap();
-            eprintln!("{}", "Expected:");
-            serde_json::to_writer_pretty(std::io::stderr(), expected).unwrap();
-            false
-        }
-        else {
-            true
-        }
     }
 }
