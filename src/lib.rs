@@ -59,12 +59,12 @@ mod tests {
     }
 
     fn run<F: FnMut() -> ()>(mut f: F, times: u32){
-        for n in 0..times{
+        for _n in 0..times{
             f();
         }
     }
 
-    fn are_equal(actual: &Vec<TetrisBlock>, expected: &Vec<TetrisBlock>) -> bool{
+    fn are_equal(actual: &Vec<&TetrisBlock>, expected: &Vec<TetrisBlock>) -> bool{
         let is_equal = actual.iter().zip(expected.iter()).filter(|&(a, b)| !a.same_position(b)).count() == 0;
 
         if !is_equal {

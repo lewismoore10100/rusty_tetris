@@ -16,13 +16,11 @@ impl TetrisEngine {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.current_shape = Square::new();
         }
-        else {
-            self.current_shape.move_down();
-        }
+        self.current_shape.move_down();
     }
 
-    pub fn generate_blocks(&self) -> Vec<TetrisBlock> {
-        Vec::from(&self.current_shape.blocks)
+    pub fn generate_blocks(&self) -> Vec<&TetrisBlock> {
+        [self.current_shape.blocks.iter().collect::<Vec<&TetrisBlock>>(), self.merged_blocks.iter().collect::<Vec<&TetrisBlock >>()].concat()
     }
 
 }
