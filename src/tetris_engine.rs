@@ -22,6 +22,10 @@ impl TetrisEngine {
 
     }
 
+    pub fn move_left(&mut self) {
+        self.current_shape.move_left();
+    }
+
     fn has_collided(&self, blocks_to_test: &[TetrisBlock]) -> bool {
         for block_to_test in blocks_to_test {
             if block_to_test.y == 0 {

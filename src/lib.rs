@@ -25,6 +25,22 @@ mod tests {
     }
 
     #[test]
+    fn block_can_be_moved_left_when_user_presses_left() {
+        let mut tetris_engine = TetrisEngine::new();
+        tetris_engine.move_left();
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+                          &vec![
+                              TetrisBlock::new(3, 19),
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(3, 18),
+                              TetrisBlock::new(4, 18)
+                          ]
+        ))
+
+    }
+
+    #[test]
     fn incrementing_tick_moves_the_current_square_down() {
         let mut tetris_engine = TetrisEngine::new();
 

@@ -25,4 +25,8 @@ impl Square {
     pub fn move_down(&mut self){
         self.blocks.iter_mut().for_each(|b| b.y -= 1)
     }
+
+    pub fn move_left(&mut self) {
+        self.blocks.iter_mut().for_each(|b| b.x -= 1)
+    }
 }
