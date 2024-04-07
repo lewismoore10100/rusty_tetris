@@ -15,12 +15,10 @@ fn main() {
 
     let mut tetris_engine = TetrisEngine::new();
 
-    let mut game_speed = FramerateLimiter::new(Duration::from_secs(1));
+    let mut game_speed = FramerateLimiter::new(Duration::from_secs(1/60));
     rendering_engine
         .update_loop(move |renderer, _window, objects, _input, _camera, _plugins| {
             game_speed.tick(||{
-                objects.clear();
-
                 tetris_engine.generate_blocks().iter().for_each(|block|{
                     render_block(block, objects, renderer);
                 });
