@@ -12,7 +12,7 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self){
-        if self.current_shape.hit() {
+        if self.current_shape.hit(&self.merged_blocks) {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.current_shape = Square::new();
         }

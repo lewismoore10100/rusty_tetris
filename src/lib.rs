@@ -59,4 +59,29 @@ mod tests {
                   ]
         ));
     }
+
+    #[test]
+    fn blocks_collide_and_stack() {
+        let mut tetris_engine = TetrisEngine::new();
+
+        run(||{tetris_engine.tick()}, 36);
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+                  &vec![
+                      TetrisBlock::new(4, 19),
+                      TetrisBlock::new(5, 19),
+                      TetrisBlock::new(4, 18),
+                      TetrisBlock::new(5, 18),
+                      TetrisBlock::new(4, 1),
+                      TetrisBlock::new(5, 1),
+                      TetrisBlock::new(4, 0),
+                      TetrisBlock::new(5, 0),
+                      TetrisBlock::new(4, 3),
+                      TetrisBlock::new(5, 3),
+                      TetrisBlock::new(4, 2),
+                      TetrisBlock::new(5, 2),
+
+                  ]
+        ));
+    }
 }
