@@ -30,12 +30,28 @@ mod tests {
         tetris_engine.move_left();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-                          &vec![
-                              TetrisBlock::new(3, 19),
-                              TetrisBlock::new(4, 19),
-                              TetrisBlock::new(3, 18),
-                              TetrisBlock::new(4, 18)
-                          ]
+              &vec![
+                  TetrisBlock::new(3, 19),
+                  TetrisBlock::new(4, 19),
+                  TetrisBlock::new(3, 18),
+                  TetrisBlock::new(4, 18)
+              ]
+        ))
+
+    }
+
+    #[test]
+    fn block_can_be_moved_right_when_user_presses_right() {
+        let mut tetris_engine = TetrisEngine::new();
+        tetris_engine.move_right();
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+              &vec![
+                  TetrisBlock::new(5, 19),
+                  TetrisBlock::new(6, 19),
+                  TetrisBlock::new(5, 18),
+                  TetrisBlock::new(6, 18)
+              ]
         ))
 
     }
