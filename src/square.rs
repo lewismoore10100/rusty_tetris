@@ -14,16 +14,8 @@ impl Square {
         ]}
     }
 
-    pub fn hit(&self, other_block: &Vec<TetrisBlock>) -> bool{
-        for other_block in other_block {
-            for my_block in &self.blocks {
-                if other_block.x == my_block.x && other_block.y+1 == my_block.y {
-                    return true;
-                }
-            }
-        }
-
-        self.blocks[3].y == 0
+    pub fn collidable_blocks(&self) -> &[TetrisBlock] {
+        return &self.blocks[3..]
     }
 
     pub fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>){
