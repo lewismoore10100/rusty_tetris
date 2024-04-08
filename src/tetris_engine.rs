@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use crate::square::Square;
 use crate::tetris_block::TetrisBlock;
 pub struct TetrisEngine {
@@ -11,9 +12,14 @@ impl TetrisEngine {
         TetrisEngine{current_shape: Square::new(), merged_blocks: vec![] }
     }
 
+    pub fn with_initial_state(initial_state: Vec<TetrisBlock>) -> TetrisEngine {
+        TetrisEngine{current_shape: Square::new(), merged_blocks: initial_state }
+    }
+
     pub fn tick(&mut self){
         if self.has_collided(self.current_shape.collidable_blocks()) {
             self.current_shape.drain_to(&mut self.merged_blocks);
+            self.remove_completed_rows();
             self.current_shape = Square::new();
         }
         else {
@@ -43,6 +49,28 @@ impl TetrisEngine {
             }
         }
         false
+    }
+
+    fn remove_completed_rows(&mut self){
+        println!("{}", "removing completed rows");
+        if self.merged_blocks.len() < 10 {
+            return;
+        }
+
+        let mut block_count_per_row : [u32;20] = [0;20];
+
+        self.merged_blocks.iter().for_each(|block| {
+            block_count_per_row[block.y as usize] = block_count_per_row[block.y as usize]+1
+        });
+
+        self.merged_blocks.retain(|block|{ block_count_per_row[block.y as usize] != 10});
+
+        let rows_removed = block_count_per_row.iter().filter(|&&count| count == 10).count() as u32;
+
+        self.merged_blocks.iter_mut().for_each(|mut block| {
+            block.y = block.y - rows_removed;
+        });
+
     }
 
     pub fn generate_blocks(&self) -> Vec<&TetrisBlock> {

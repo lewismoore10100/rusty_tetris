@@ -116,4 +116,34 @@ mod tests {
                   ]
         ));
     }
+
+    #[test]
+    fn removes_completed_rows_once_current_shape_is_finished() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(
+            vec![
+                TetrisBlock::new(0, 0),
+                TetrisBlock::new(1, 0),
+                TetrisBlock::new(2, 0),
+                TetrisBlock::new(3, 0),
+
+                TetrisBlock::new(6, 0),
+                TetrisBlock::new(7, 0),
+                TetrisBlock::new(8, 0),
+                TetrisBlock::new(9, 0),
+        ]);
+
+        run(||{tetris_engine.tick()}, 19);
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+              &vec![
+                  TetrisBlock::new(4, 19),
+                  TetrisBlock::new(5, 19),
+                  TetrisBlock::new(4, 18),
+                  TetrisBlock::new(5, 18),
+
+                  TetrisBlock::new(4, 0),
+                  TetrisBlock::new(5, 0),
+              ]
+        ));
+    }
 }
