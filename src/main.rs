@@ -1,7 +1,7 @@
 use std::time::Duration;
 use blue_engine::KeyCode;
 
-use crate::game_engine_setup::{FramerateLimiter, GameProgressLimiter, setup_engine};
+use crate::game_engine_setup::{SpeedLimiter, setup_engine};
 use crate::render_blocks::render_blocks;
 use crate::tetris_engine::TetrisEngine;
 
@@ -16,8 +16,8 @@ fn main() {
 
     let mut tetris_engine = TetrisEngine::new();
 
-    let mut frame_rate_limiter = FramerateLimiter::new(Duration::from_secs(1/60));
-    let mut game_progress_limiter = GameProgressLimiter::new(Duration::from_secs(1));
+    let mut frame_rate_limiter = SpeedLimiter::new(Duration::from_secs(1/60));
+    let mut game_progress_limiter = SpeedLimiter::new(Duration::from_secs(1));
     rendering_engine
         .update_loop(move |renderer, _window, objects, input, _camera, _plugins| {
             if input.key_pressed(KeyCode::ArrowLeft) {
