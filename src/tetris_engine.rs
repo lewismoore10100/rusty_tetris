@@ -36,6 +36,15 @@ impl TetrisEngine {
         self.current_shape.move_right();
     }
 
+    pub fn drop(&mut self) {
+        loop {
+            self.current_shape.move_down();
+            if self.has_collided(self.current_shape.collidable_blocks()){
+                break;
+            }
+        }
+    }
+
     fn has_collided(&self, blocks_to_test: &[TetrisBlock]) -> bool {
         for block_to_test in blocks_to_test {
             if block_to_test.y == 0 {

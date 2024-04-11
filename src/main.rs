@@ -28,6 +28,10 @@ fn main() {
                 tetris_engine.move_right();
             }
 
+            if input.key_pressed(KeyCode::ArrowDown) {
+                tetris_engine.drop();
+            }
+
             tetris_engine.generate_blocks().iter().for_each(|block|{
                 render_block(block, objects, renderer);
             });

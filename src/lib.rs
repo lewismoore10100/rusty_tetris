@@ -14,14 +14,13 @@ mod tests {
         let tetris_engine = TetrisEngine::new();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-    &vec![
-                    TetrisBlock::new(4, 19),
-                    TetrisBlock::new(5, 19),
-                    TetrisBlock::new(4, 18),
-                    TetrisBlock::new(5, 18)
-            ]
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                          ],
         ))
-
     }
 
     #[test]
@@ -30,14 +29,13 @@ mod tests {
         tetris_engine.move_left();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-              &vec![
-                  TetrisBlock::new(3, 19),
-                  TetrisBlock::new(4, 19),
-                  TetrisBlock::new(3, 18),
-                  TetrisBlock::new(4, 18)
-              ]
+                          &vec![
+                              TetrisBlock::new(3, 19),
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(3, 18),
+                              TetrisBlock::new(4, 18),
+                          ],
         ))
-
     }
 
     #[test]
@@ -46,14 +44,28 @@ mod tests {
         tetris_engine.move_right();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-              &vec![
-                  TetrisBlock::new(5, 19),
-                  TetrisBlock::new(6, 19),
-                  TetrisBlock::new(5, 18),
-                  TetrisBlock::new(6, 18)
-              ]
+                          &vec![
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(6, 19),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(6, 18),
+                          ],
         ))
+    }
 
+    #[test]
+    fn blocks_drops_when_user_presses_down() {
+        let mut tetris_engine = TetrisEngine::new();
+        tetris_engine.drop();
+
+        assert!(are_equal(&tetris_engine.generate_blocks(),
+                          &vec![
+                              TetrisBlock::new(4, 1),
+                              TetrisBlock::new(5, 1),
+                              TetrisBlock::new(4, 0),
+                              TetrisBlock::new(5, 0),
+                          ],
+        ));
     }
 
     #[test]
@@ -63,12 +75,12 @@ mod tests {
         tetris_engine.tick();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-            &vec![
-                      TetrisBlock::new(4, 18),
-                      TetrisBlock::new(5, 18),
-                      TetrisBlock::new(4, 17),
-                      TetrisBlock::new(5, 17),
-                  ]
+                          &vec![
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(5, 17),
+                          ],
         ))
     }
 
@@ -76,19 +88,19 @@ mod tests {
     fn first_block_stops_when_hitting_bottom() {
         let mut tetris_engine = TetrisEngine::new();
 
-        run(||{tetris_engine.tick()}, 19);
+        run(|| { tetris_engine.tick() }, 19);
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-                  &vec![
-                      TetrisBlock::new(4, 19),
-                      TetrisBlock::new(5, 19),
-                      TetrisBlock::new(4, 18),
-                      TetrisBlock::new(5, 18),
-                      TetrisBlock::new(4, 1),
-                      TetrisBlock::new(5, 1),
-                      TetrisBlock::new(4, 0),
-                      TetrisBlock::new(5, 0),
-                  ]
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 1),
+                              TetrisBlock::new(5, 1),
+                              TetrisBlock::new(4, 0),
+                              TetrisBlock::new(5, 0),
+                          ],
         ));
     }
 
@@ -96,24 +108,23 @@ mod tests {
     fn blocks_collide_and_stack() {
         let mut tetris_engine = TetrisEngine::new();
 
-        run(||{tetris_engine.tick()}, 36);
+        run(|| { tetris_engine.tick() }, 36);
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-                  &vec![
-                      TetrisBlock::new(4, 19),
-                      TetrisBlock::new(5, 19),
-                      TetrisBlock::new(4, 18),
-                      TetrisBlock::new(5, 18),
-                      TetrisBlock::new(4, 1),
-                      TetrisBlock::new(5, 1),
-                      TetrisBlock::new(4, 0),
-                      TetrisBlock::new(5, 0),
-                      TetrisBlock::new(4, 3),
-                      TetrisBlock::new(5, 3),
-                      TetrisBlock::new(4, 2),
-                      TetrisBlock::new(5, 2),
-
-                  ]
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 1),
+                              TetrisBlock::new(5, 1),
+                              TetrisBlock::new(4, 0),
+                              TetrisBlock::new(5, 0),
+                              TetrisBlock::new(4, 3),
+                              TetrisBlock::new(5, 3),
+                              TetrisBlock::new(4, 2),
+                              TetrisBlock::new(5, 2),
+                          ],
         ));
     }
 
@@ -125,25 +136,23 @@ mod tests {
                 TetrisBlock::new(1, 0),
                 TetrisBlock::new(2, 0),
                 TetrisBlock::new(3, 0),
-
                 TetrisBlock::new(6, 0),
                 TetrisBlock::new(7, 0),
                 TetrisBlock::new(8, 0),
                 TetrisBlock::new(9, 0),
-        ]);
+            ]);
 
-        run(||{tetris_engine.tick()}, 19);
+        run(|| { tetris_engine.tick() }, 19);
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
-              &vec![
-                  TetrisBlock::new(4, 19),
-                  TetrisBlock::new(5, 19),
-                  TetrisBlock::new(4, 18),
-                  TetrisBlock::new(5, 18),
-
-                  TetrisBlock::new(4, 0),
-                  TetrisBlock::new(5, 0),
-              ]
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 0),
+                              TetrisBlock::new(5, 0),
+                          ],
         ));
     }
 }
