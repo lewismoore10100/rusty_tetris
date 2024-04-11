@@ -15,7 +15,7 @@ impl Square {
     }
 
     pub fn collidable_blocks(&self) -> &[TetrisBlock] {
-        return &self.blocks[3..]
+        return &self.blocks[2..]
     }
 
     pub fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>){
