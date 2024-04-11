@@ -2,12 +2,12 @@ use std::time::Duration;
 use blue_engine::KeyCode;
 
 use crate::game_engine_setup::{FramerateLimiter, GameProgressLimiter, setup_engine};
-use crate::render_block::render_block;
+use crate::render_blocks::render_blocks;
 use crate::tetris_engine::TetrisEngine;
 
 mod game_engine_setup;
 mod tetris_block;
-mod render_block;
+mod render_blocks;
 mod tetris_engine;
 mod square;
 
@@ -32,9 +32,7 @@ fn main() {
                 tetris_engine.drop();
             }
 
-            tetris_engine.generate_blocks().iter().for_each(|block|{
-                render_block(block, objects, renderer);
-            });
+            render_blocks(tetris_engine.generate_blocks(), objects, renderer);
 
             frame_rate_limiter.tick(||{
                 game_progress_limiter.tick(||{

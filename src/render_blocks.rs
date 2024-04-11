@@ -36,7 +36,9 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
             renderer,
         ).unwrap();
 
-        objects.get_mut(&block.id).unwrap().set_position((-1.0)+(block.x as f32/5.0), (-1.0)+(block.y as f32/10.0), 0.0);
+        objects.get_mut(&block.id)
+            .unwrap()
+            .set_position((-1.0)+(block.x as f32/5.0), (-1.0)+(block.y as f32/10.0), 0.0);
     });
 
 }
