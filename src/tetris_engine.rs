@@ -40,6 +40,7 @@ impl TetrisEngine {
         loop {
             self.current_shape.move_down();
             if self.has_collided(self.current_shape.collidable_blocks()){
+                self.tick();
                 break;
             }
         }
@@ -61,7 +62,6 @@ impl TetrisEngine {
     }
 
     fn remove_completed_rows(&mut self){
-        println!("{}", "removing completed rows");
         if self.merged_blocks.len() < 10 {
             return;
         }

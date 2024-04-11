@@ -54,12 +54,16 @@ mod tests {
     }
 
     #[test]
-    fn blocks_drops_when_user_presses_down() {
+    fn block_drops_when_user_presses_down() {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.drop();
 
         assert!(are_equal(&tetris_engine.generate_blocks(),
                           &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
                               TetrisBlock::new(4, 1),
                               TetrisBlock::new(5, 1),
                               TetrisBlock::new(4, 0),
