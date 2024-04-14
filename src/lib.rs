@@ -13,7 +13,7 @@ mod tests {
     fn on_first_tick_a_single_square_is_put_into_play() {
         let tetris_engine = TetrisEngine::new();
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 19),
                               TetrisBlock::new(5, 19),
@@ -28,7 +28,7 @@ mod tests {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.move_left();
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(3, 19),
                               TetrisBlock::new(4, 19),
@@ -43,7 +43,7 @@ mod tests {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.move_right();
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(5, 19),
                               TetrisBlock::new(6, 19),
@@ -58,7 +58,7 @@ mod tests {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.drop();
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 19),
                               TetrisBlock::new(5, 19),
@@ -78,7 +78,7 @@ mod tests {
 
         tetris_engine.tick();
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 18),
                               TetrisBlock::new(5, 18),
@@ -94,7 +94,7 @@ mod tests {
 
         run(|| { tetris_engine.tick() }, 19);
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 19),
                               TetrisBlock::new(5, 19),
@@ -114,7 +114,7 @@ mod tests {
 
         run(|| { tetris_engine.tick() }, 36);
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 19),
                               TetrisBlock::new(5, 19),
@@ -148,7 +148,7 @@ mod tests {
 
         run(|| { tetris_engine.tick() }, 19);
 
-        assert!(are_equal(&tetris_engine.generate_blocks(),
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
                               TetrisBlock::new(4, 19),
                               TetrisBlock::new(5, 19),

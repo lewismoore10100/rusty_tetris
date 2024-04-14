@@ -32,7 +32,7 @@ fn main() {
                 tetris_engine.drop();
             }
 
-            render_blocks(tetris_engine.generate_blocks(), objects, renderer);
+            render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
 
             frame_rate_limiter.tick(||{
                 game_progress_limiter.tick(||{

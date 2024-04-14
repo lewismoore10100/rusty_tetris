@@ -1,6 +1,6 @@
-use std::collections::HashMap;
 use crate::square::Square;
 use crate::tetris_block::TetrisBlock;
+
 pub struct TetrisEngine {
     current_shape: Square,
     merged_blocks: Vec<TetrisBlock>
@@ -82,8 +82,11 @@ impl TetrisEngine {
 
     }
 
-    pub fn generate_blocks(&self) -> Vec<&TetrisBlock> {
-        [self.current_shape.blocks.iter().collect::<Vec<&TetrisBlock>>(), self.merged_blocks.iter().collect::<Vec<&TetrisBlock >>()].concat()
+    pub fn blocks_for_rendering(&self) -> Vec<&TetrisBlock> {
+        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks.len() + self.merged_blocks.len());
+        self.current_shape.blocks.iter().for_each(|b| all_blocks.push(b));
+        self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
+        all_blocks
     }
 
 }
