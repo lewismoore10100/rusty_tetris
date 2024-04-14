@@ -17,7 +17,7 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self){
-        if self.has_collided(self.current_shape.collidable_blocks()) {
+        if !self.can_move_down(self.current_shape.all_blocks()) {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.remove_completed_rows();
             self.current_shape = Square::new();
@@ -33,32 +33,43 @@ impl TetrisEngine {
     }
 
     pub fn move_right(&mut self) {
-        self.current_shape.move_right();
+        if self.can_move_right(self.current_shape.all_blocks()) {
+            self.current_shape.move_right();
+        }
     }
 
     pub fn drop(&mut self) {
         loop {
             self.current_shape.move_down();
-            if self.has_collided(self.current_shape.collidable_blocks()){
+            if !self.can_move_down(self.current_shape.all_blocks()){
                 self.tick();
                 break;
             }
         }
     }
+    
+    fn can_move_right(&self, blocks_to_test: &[TetrisBlock]) -> bool {
+        for block_to_test in blocks_to_test {
+            if block_to_test.x == 9  {
+                return false
+            }
+        }
+        true
+    }
 
-    fn has_collided(&self, blocks_to_test: &[TetrisBlock]) -> bool {
+    fn can_move_down(&self, blocks_to_test: &[TetrisBlock]) -> bool {
         for block_to_test in blocks_to_test {
             if block_to_test.y == 0 {
-                return true
+                return false
             }
 
             for merged_block in &self.merged_blocks {
                 if block_to_test.x == merged_block.x && block_to_test.y-1 == merged_block.y {
-                    return true
+                    return false
                 }
             }
         }
-        false
+        true
     }
 
     fn remove_completed_rows(&mut self){

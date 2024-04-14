@@ -54,6 +54,25 @@ mod tests {
     }
 
     #[test]
+    fn block_can_not_move_out_of_bounds_on_the_right() {
+        let mut tetris_engine = TetrisEngine::new();
+
+        run(||{
+            tetris_engine.move_right();
+        }, 100);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(8, 19),
+                              TetrisBlock::new(9, 19),
+                              TetrisBlock::new(8, 18),
+                              TetrisBlock::new(9, 18),
+                          ],
+        ))
+    }
+
+    #[test]
     fn block_drops_when_user_presses_down() {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.drop();
