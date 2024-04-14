@@ -29,7 +29,9 @@ impl TetrisEngine {
     }
 
     pub fn move_left(&mut self) {
-        self.current_shape.move_left();
+        if self.can_move_left(self.current_shape.all_blocks()) {
+            self.current_shape.move_left();
+        }
     }
 
     pub fn move_right(&mut self) {
@@ -51,6 +53,15 @@ impl TetrisEngine {
     fn can_move_right(&self, blocks_to_test: &[TetrisBlock]) -> bool {
         for block_to_test in blocks_to_test {
             if block_to_test.x == 9  {
+                return false
+            }
+        }
+        true
+    }
+
+    fn can_move_left(&self, blocks_to_test: &[TetrisBlock]) -> bool {
+        for block_to_test in blocks_to_test {
+            if block_to_test.x == 0  {
                 return false
             }
         }

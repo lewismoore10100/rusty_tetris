@@ -39,6 +39,25 @@ mod tests {
     }
 
     #[test]
+    fn block_can_not_move_out_of_bounds_on_the_left() {
+        let mut tetris_engine = TetrisEngine::new();
+
+        run(||{
+            tetris_engine.move_left();
+        }, 100);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(0, 19),
+                              TetrisBlock::new(1, 19),
+                              TetrisBlock::new(0, 18),
+                              TetrisBlock::new(1, 18),
+                          ],
+        ))
+    }
+
+    #[test]
     fn block_can_be_moved_right_when_user_presses_right() {
         let mut tetris_engine = TetrisEngine::new();
         tetris_engine.move_right();
