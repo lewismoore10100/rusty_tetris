@@ -92,7 +92,7 @@ mod tests {
     }
 
     #[test]
-    fn current_shape_can_not_overlap_existing_blocks() {
+    fn current_shape_can_not_overlap_existing_blocks_when_moving_right() {
         let mut tetris_engine = TetrisEngine::with_initial_state(
             vec![
                 TetrisBlock::new(8, 19),
@@ -117,6 +117,36 @@ mod tests {
                               TetrisBlock::new(9, 19),
                               TetrisBlock::new(8, 18),
                               TetrisBlock::new(9, 18),
+                          ],
+        ))
+    }
+
+    #[test]
+    fn current_shape_can_not_overlap_existing_blocks_when_moving_left() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(
+            vec![
+                TetrisBlock::new(0, 19),
+                TetrisBlock::new(1, 19),
+                TetrisBlock::new(0, 18),
+                TetrisBlock::new(1, 18),
+            ]
+        );
+
+        run(|| {
+            tetris_engine.move_left();
+        }, 100);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(2, 19),
+                              TetrisBlock::new(3, 19),
+                              TetrisBlock::new(2, 18),
+                              TetrisBlock::new(3, 18),
+                              TetrisBlock::new(0, 19),
+                              TetrisBlock::new(1, 19),
+                              TetrisBlock::new(0, 18),
+                              TetrisBlock::new(1, 18),
                           ],
         ))
     }
