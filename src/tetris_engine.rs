@@ -51,43 +51,31 @@ impl TetrisEngine {
     }
     
     fn can_move_right(&self, blocks_to_test: &[TetrisBlock]) -> bool {
-        for block_to_test in blocks_to_test {
-            if block_to_test.x == 9  {
-                return false
-            }
-
-            for merged_block in &self.merged_blocks {
-                if block_to_test.x+1 == merged_block.x && block_to_test.y == merged_block.y {
-                    return false
-                }
-            }
-        }
-        true
+        self.can_move(blocks_to_test, 1, 0)
     }
 
     fn can_move_left(&self, blocks_to_test: &[TetrisBlock]) -> bool {
-        for block_to_test in blocks_to_test {
-            if block_to_test.x == 0  {
-                return false
-            }
-
-            for merged_block in &self.merged_blocks {
-                if block_to_test.x-1 == merged_block.x && block_to_test.y == merged_block.y {
-                    return false
-                }
-            }
-        }
-        true
+        self.can_move(blocks_to_test, -1, 0)
     }
 
     fn can_move_down(&self, blocks_to_test: &[TetrisBlock]) -> bool {
+        self.can_move(blocks_to_test, 0, -1)
+    }
+
+    fn can_move(&self, blocks_to_test: &[TetrisBlock], x_movement: i32, y_movement: i32) -> bool{
         for block_to_test in blocks_to_test {
-            if block_to_test.y == 0 {
+            if block_to_test.y as i32+y_movement == -1 {
+                return false
+            }
+            if block_to_test.x as i32+x_movement == -1  {
+                return false
+            }
+            if block_to_test.x as i32+x_movement == 10  {
                 return false
             }
 
             for merged_block in &self.merged_blocks {
-                if block_to_test.x == merged_block.x && block_to_test.y-1 == merged_block.y {
+                if block_to_test.x as i32+x_movement == merged_block.x as i32 && block_to_test.y as i32+y_movement == merged_block.y as i32 {
                     return false
                 }
             }
