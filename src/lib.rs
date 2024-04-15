@@ -42,7 +42,7 @@ mod tests {
     fn block_can_not_move_out_of_bounds_on_the_left() {
         let mut tetris_engine = TetrisEngine::new();
 
-        run(||{
+        run(|| {
             tetris_engine.move_left();
         }, 100);
 
@@ -76,13 +76,43 @@ mod tests {
     fn block_can_not_move_out_of_bounds_on_the_right() {
         let mut tetris_engine = TetrisEngine::new();
 
-        run(||{
+        run(|| {
             tetris_engine.move_right();
         }, 100);
 
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
+                              TetrisBlock::new(8, 19),
+                              TetrisBlock::new(9, 19),
+                              TetrisBlock::new(8, 18),
+                              TetrisBlock::new(9, 18),
+                          ],
+        ))
+    }
+
+    #[test]
+    fn current_shape_can_not_overlap_existing_blocks() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(
+            vec![
+                TetrisBlock::new(8, 19),
+                TetrisBlock::new(9, 19),
+                TetrisBlock::new(8, 18),
+                TetrisBlock::new(9, 18),
+            ]
+        );
+
+        run(|| {
+            tetris_engine.move_right();
+        }, 100);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(6, 19),
+                              TetrisBlock::new(7, 19),
+                              TetrisBlock::new(6, 18),
+                              TetrisBlock::new(7, 18),
                               TetrisBlock::new(8, 19),
                               TetrisBlock::new(9, 19),
                               TetrisBlock::new(8, 18),

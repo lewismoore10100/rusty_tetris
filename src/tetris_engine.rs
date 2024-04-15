@@ -55,6 +55,12 @@ impl TetrisEngine {
             if block_to_test.x == 9  {
                 return false
             }
+
+            for merged_block in &self.merged_blocks {
+                if block_to_test.x+1 == merged_block.x && block_to_test.y == merged_block.y {
+                    return false
+                }
+            }
         }
         true
     }
