@@ -1,7 +1,8 @@
 use std::time::Duration;
+
 use blue_engine::KeyCode;
 
-use crate::game_engine_setup::{SpeedLimiter, setup_engine};
+use crate::game_engine_setup::{setup_engine, SpeedLimiter};
 use crate::render_blocks::render_blocks;
 use crate::tetris_engine::TetrisEngine;
 
