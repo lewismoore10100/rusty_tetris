@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+
 use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
 
 use crate::tetris_block::TetrisBlock;
@@ -46,9 +47,8 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                 objects.get_mut(&block.id).unwrap()
             }
         };
-        block_in_object_store.set_position((-1.0)+(block.x as f32/5.0), (-1.0)+(block.y as f32/10.0), 0.0);
+        block_in_object_store.set_position((-1.0) + (block.x as f32 / 5.0), (-1.0) + (block.y as f32 / 10.0), 0.0);
     });
 
     objects.retain(|b, o| block_ids_to_render.contains(b));
-
 }

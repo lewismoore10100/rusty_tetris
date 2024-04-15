@@ -17,7 +17,7 @@ fn main() {
 
     let mut tetris_engine = TetrisEngine::new();
 
-    let mut frame_rate_limiter = SpeedLimiter::new(Duration::from_secs(1/60));
+    let mut frame_rate_limiter = SpeedLimiter::new(Duration::from_secs(1 / 60));
     let mut game_progress_limiter = SpeedLimiter::new(Duration::from_secs(1));
     rendering_engine
         .update_loop(move |renderer, _window, objects, input, _camera, _plugins| {
@@ -35,8 +35,8 @@ fn main() {
 
             render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
 
-            frame_rate_limiter.tick(||{
-                game_progress_limiter.tick(||{
+            frame_rate_limiter.tick(|| {
+                game_progress_limiter.tick(|| {
                     tetris_engine.tick();
                 })
             })

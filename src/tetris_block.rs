@@ -5,12 +5,12 @@ use serde::Serialize;
 pub struct TetrisBlock {
     pub x: u32,
     pub y: u32,
-    pub id: String
+    pub id: String,
 }
 
 impl TetrisBlock {
     pub fn new(x: u32, y: u32) -> TetrisBlock {
-        TetrisBlock{x, y, id: random_string()}
+        TetrisBlock { x, y, id: random_string() }
     }
 
     pub fn same_position(&self, other: &TetrisBlock) -> bool {
