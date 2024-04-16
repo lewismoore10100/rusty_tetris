@@ -1,7 +1,7 @@
 use crate::tetris_block::TetrisBlock;
 
 pub trait PlayableShape {
-    fn all_blocks(&self) -> &[TetrisBlock];
+    fn blocks(&self) -> &[TetrisBlock];
     fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock>;
 
     fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
@@ -38,7 +38,7 @@ impl Square {
     }
 }
 impl PlayableShape for Square {
-    fn all_blocks(&self) -> &[TetrisBlock] {
+    fn blocks(&self) -> &[TetrisBlock] {
         &self.blocks[..]
     }
     fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock> {

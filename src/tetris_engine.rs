@@ -16,7 +16,7 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        if !self.can_move_down(self.current_shape.all_blocks()) {
+        if !self.can_move_down(self.current_shape.blocks()) {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.remove_completed_rows();
             self.current_shape = Box::new(Square::new());
@@ -26,13 +26,13 @@ impl TetrisEngine {
     }
 
     pub fn move_left(&mut self) {
-        if self.can_move_left(self.current_shape.all_blocks()) {
+        if self.can_move_left(self.current_shape.blocks()) {
             self.current_shape.move_left();
         }
     }
 
     pub fn move_right(&mut self) {
-        if self.can_move_right(self.current_shape.all_blocks()) {
+        if self.can_move_right(self.current_shape.blocks()) {
             self.current_shape.move_right();
         }
     }
@@ -40,7 +40,7 @@ impl TetrisEngine {
     pub fn drop(&mut self) {
         loop {
             self.current_shape.move_down();
-            if !self.can_move_down(self.current_shape.all_blocks()) {
+            if !self.can_move_down(self.current_shape.blocks()) {
                 self.tick();
                 break;
             }
@@ -101,8 +101,8 @@ impl TetrisEngine {
     }
 
     pub fn blocks_for_rendering(&self) -> Vec<&TetrisBlock> {
-        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.all_blocks().len() + self.merged_blocks.len());
-        self.current_shape.all_blocks().iter().for_each(|b| all_blocks.push(b));
+        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
+        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b));
         self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
         all_blocks
     }
