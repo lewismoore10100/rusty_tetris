@@ -1,25 +1,25 @@
-use crate::square::Square;
+use crate::shapes::{PlayableShape, Square};
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
-    current_shape: Square,
+    current_shape: Box<dyn PlayableShape>,
     merged_blocks: Vec<TetrisBlock>,
 }
 
 impl TetrisEngine {
     pub fn new() -> TetrisEngine {
-        TetrisEngine { current_shape: Square::new(), merged_blocks: vec![] }
+        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: vec![] }
     }
 
     pub fn with_initial_state(initial_state: Vec<TetrisBlock>) -> TetrisEngine {
-        TetrisEngine { current_shape: Square::new(), merged_blocks: initial_state }
+        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: initial_state }
     }
 
     pub fn tick(&mut self) {
         if !self.can_move_down(self.current_shape.all_blocks()) {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.remove_completed_rows();
-            self.current_shape = Square::new();
+            self.current_shape = Box::new(Square::new());
         } else {
             self.current_shape.move_down();
         }
@@ -101,8 +101,8 @@ impl TetrisEngine {
     }
 
     pub fn blocks_for_rendering(&self) -> Vec<&TetrisBlock> {
-        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks.len() + self.merged_blocks.len());
-        self.current_shape.blocks.iter().for_each(|b| all_blocks.push(b));
+        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.all_blocks().len() + self.merged_blocks.len());
+        self.current_shape.all_blocks().iter().for_each(|b| all_blocks.push(b));
         self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
         all_blocks
     }

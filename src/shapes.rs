@@ -1,5 +1,13 @@
 use crate::tetris_block::TetrisBlock;
 
+pub trait PlayableShape {
+    fn all_blocks(&self) -> &[TetrisBlock];
+    fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>);
+    fn move_down(&mut self);
+    fn move_left(&mut self);
+    fn move_right(&mut self);
+}
+
 pub struct Square {
     pub blocks: Vec<TetrisBlock>,
 }
@@ -15,24 +23,25 @@ impl Square {
             ]
         }
     }
-
-    pub fn all_blocks(&self) -> &[TetrisBlock] {
+}
+impl PlayableShape for Square {
+    fn all_blocks(&self) -> &[TetrisBlock] {
         return &self.blocks[..];
     }
 
-    pub fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
+    fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
         merge_to.append(&mut self.blocks);
     }
 
-    pub fn move_down(&mut self) {
+    fn move_down(&mut self) {
         self.blocks.iter_mut().for_each(|b| b.y -= 1)
     }
 
-    pub fn move_left(&mut self) {
+    fn move_left(&mut self) {
         self.blocks.iter_mut().for_each(|b| b.x -= 1)
     }
 
-    pub fn move_right(&mut self) {
+    fn move_right(&mut self) {
         self.blocks.iter_mut().for_each(|b| b.x += 1)
     }
 }

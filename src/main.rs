@@ -10,7 +10,7 @@ mod game_engine_setup;
 mod tetris_block;
 mod render_blocks;
 mod tetris_engine;
-mod square;
+mod shapes;
 
 fn main() {
     let rendering_engine = setup_engine();
