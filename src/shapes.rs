@@ -3,7 +3,7 @@ use crate::tetris_block::TetrisBlock;
 pub trait PlayableShape {
     fn blocks(&self) -> &[TetrisBlock];
     fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock>;
-
+    fn rotate(&mut self);
     fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
         merge_to.append(&mut self.blocks_mut());
     }
@@ -44,4 +44,5 @@ impl PlayableShape for Square {
     fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock> {
         &mut self.blocks
     }
+    fn rotate(&mut self) {}
 }
