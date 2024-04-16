@@ -2,10 +2,23 @@ use crate::tetris_block::TetrisBlock;
 
 pub trait PlayableShape {
     fn all_blocks(&self) -> &[TetrisBlock];
-    fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>);
-    fn move_down(&mut self);
-    fn move_left(&mut self);
-    fn move_right(&mut self);
+    fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock>;
+
+    fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
+        merge_to.append(&mut self.blocks_mut());
+    }
+
+    fn move_down(&mut self) {
+        self.blocks_mut().iter_mut().for_each(|b| b.y -= 1)
+    }
+
+    fn move_left(&mut self) {
+        self.blocks_mut().iter_mut().for_each(|b| b.x -= 1)
+    }
+
+    fn move_right(&mut self) {
+        self.blocks_mut().iter_mut().for_each(|b| b.x += 1)
+    }
 }
 
 pub struct Square {
@@ -26,22 +39,9 @@ impl Square {
 }
 impl PlayableShape for Square {
     fn all_blocks(&self) -> &[TetrisBlock] {
-        return &self.blocks[..];
+        &self.blocks[..]
     }
-
-    fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>) {
-        merge_to.append(&mut self.blocks);
-    }
-
-    fn move_down(&mut self) {
-        self.blocks.iter_mut().for_each(|b| b.y -= 1)
-    }
-
-    fn move_left(&mut self) {
-        self.blocks.iter_mut().for_each(|b| b.x -= 1)
-    }
-
-    fn move_right(&mut self) {
-        self.blocks.iter_mut().for_each(|b| b.x += 1)
+    fn blocks_mut(&mut self) -> &mut Vec<TetrisBlock> {
+        &mut self.blocks
     }
 }
