@@ -6,7 +6,7 @@ pub struct Square {
 }
 
 impl Square {
-    pub(crate) fn new() -> Square {
+    pub fn new() -> Square {
         Square {
             block_group: BlockGroup {
                 blocks: vec![

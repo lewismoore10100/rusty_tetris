@@ -1,26 +1,45 @@
 use crate::shapes::{PlayableShape};
 use crate::square::Square;
+use crate::tee::Tee;
 use crate::tetris_block::TetrisBlock;
+extern crate rand;
+use rand::Rng;
 
 pub struct TetrisEngine {
     current_shape: Box<dyn PlayableShape>,
     merged_blocks: Vec<TetrisBlock>,
+    generate_next_shape: fn() -> Box<dyn PlayableShape>
+}
+
+fn random_shape_generator() -> Box<dyn PlayableShape>{
+    let mut rng = rand::thread_rng();
+    let random_number = rng.gen_range(0..2);
+
+    match random_number {
+        0 => Box::new(Square::new()),
+        1 => Box::new(Tee::new()),
+        _ => Box::new(Square::new())
+    }
 }
 
 impl TetrisEngine {
     pub fn new() -> TetrisEngine {
-        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: vec![] }
+        TetrisEngine {
+            current_shape: Box::new(Square::new()),
+            merged_blocks: vec![],
+            generate_next_shape: random_shape_generator
+        }
     }
 
-    pub fn with_initial_state(initial_state: Vec<TetrisBlock>) -> TetrisEngine {
-        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: initial_state }
+    pub fn with_initial_state(initial_state: Vec<TetrisBlock>, shape_generator: fn() -> Box<dyn PlayableShape>) -> TetrisEngine {
+        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: initial_state, generate_next_shape: shape_generator }
     }
 
     pub fn tick(&mut self) {
         if !self.can_move_down(self.current_shape.blocks()) {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.remove_completed_rows();
-            self.current_shape = Box::new(Square::new());
+            self.current_shape = (self.generate_next_shape)()
         } else {
             self.current_shape.move_down();
         }

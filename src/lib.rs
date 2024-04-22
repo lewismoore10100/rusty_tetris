@@ -3,12 +3,19 @@ mod tetris_block;
 mod shapes;
 mod test_utils;
 mod square;
+mod tee;
 
 #[cfg(test)]
 mod tests {
+    use crate::shapes::PlayableShape;
+    use crate::square::Square;
     use crate::test_utils::{are_equal, run};
     use crate::tetris_block::TetrisBlock;
     use crate::tetris_engine::TetrisEngine;
+
+    fn shape_generator() -> Box<dyn PlayableShape>{
+        Box::new(Square::new())
+    }
 
     #[test]
     fn on_first_tick_a_single_square_is_put_into_play() {
@@ -100,7 +107,8 @@ mod tests {
                 TetrisBlock::new(9, 19),
                 TetrisBlock::new(8, 18),
                 TetrisBlock::new(9, 18),
-            ]
+            ],
+            shape_generator
         );
 
         run(|| {
@@ -130,7 +138,8 @@ mod tests {
                 TetrisBlock::new(1, 19),
                 TetrisBlock::new(0, 18),
                 TetrisBlock::new(1, 18),
-            ]
+            ],
+            shape_generator
         );
 
         run(|| {
@@ -243,7 +252,9 @@ mod tests {
                 TetrisBlock::new(7, 0),
                 TetrisBlock::new(8, 0),
                 TetrisBlock::new(9, 0),
-            ]);
+            ],
+            shape_generator
+        );
 
         run(|| { tetris_engine.tick() }, 19);
 
