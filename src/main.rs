@@ -11,6 +11,7 @@ mod tetris_block;
 mod render_blocks;
 mod tetris_engine;
 mod shapes;
+mod square;
 
 fn main() {
     let rendering_engine = setup_engine();

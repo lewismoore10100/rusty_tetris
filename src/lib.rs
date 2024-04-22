@@ -2,6 +2,7 @@ mod tetris_engine;
 mod tetris_block;
 mod shapes;
 mod test_utils;
+mod square;
 
 #[cfg(test)]
 mod tests {

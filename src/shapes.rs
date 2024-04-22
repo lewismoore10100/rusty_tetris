@@ -20,27 +20,6 @@ impl BlockGroup {
         self.blocks.iter_mut().for_each(|b| b.x += 1)
     }
 }
-
-
-pub struct Square {
-    pub block_group: BlockGroup
-}
-
-impl Square {
-    pub(crate) fn new() -> Square {
-        Square {
-            block_group: BlockGroup {
-                blocks: vec![
-                    TetrisBlock::new(4, 19),
-                    TetrisBlock::new(5, 19),
-                    TetrisBlock::new(4, 18),
-                    TetrisBlock::new(5, 18),
-                ]
-            }
-        }
-    }
-}
-
 pub trait PlayableShape {
     fn blocks(&self) -> &[TetrisBlock] {
         &self.block_group().blocks[..]
@@ -63,13 +42,4 @@ pub trait PlayableShape {
     fn block_group_mut(&mut self) -> &mut BlockGroup;
 
     fn block_group(&self) -> &BlockGroup;
-}
-impl PlayableShape for Square {
-    fn block_group_mut(&mut self) -> &mut BlockGroup {
-        &mut self.block_group
-    }
-
-    fn block_group(&self) -> &BlockGroup {
-        &self.block_group
-    }
 }

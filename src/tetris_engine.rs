@@ -1,4 +1,5 @@
-use crate::shapes::{PlayableShape, Square};
+use crate::shapes::{PlayableShape};
+use crate::square::Square;
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
