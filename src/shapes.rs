@@ -23,13 +23,13 @@ impl BlockGroup {
 
 
 pub struct Square {
-    pub blocks: BlockGroup
+    pub blockGroup: BlockGroup
 }
 
 impl Square {
     pub(crate) fn new() -> Square {
         Square {
-            blocks: BlockGroup {
+            blockGroup: BlockGroup {
                 blocks: vec![
                     TetrisBlock::new(4, 19),
                     TetrisBlock::new(5, 19),
@@ -53,20 +53,20 @@ pub trait PlayableShape {
 }
 impl PlayableShape for Square {
     fn blocks(&self) -> &[TetrisBlock] {
-        &self.blocks.blocks[..]
+        &self.blockGroup.blocks[..]
     }
     fn drain_to(&mut self, merge_to: &mut Vec<TetrisBlock>){
-        self.blocks.drain_to(merge_to)
+        self.blockGroup.drain_to(merge_to)
     }
 
     fn move_down(&mut self) {
-        self.blocks.move_down()
+        self.blockGroup.move_down()
     }
 
     fn move_left(&mut self) {
-        self.blocks.move_left()
+        self.blockGroup.move_left()
     }
     fn move_right(&mut self) {
-        self.blocks.move_right()
+        self.blockGroup.move_right()
     }
 }
