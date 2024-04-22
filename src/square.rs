@@ -2,7 +2,7 @@ use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
 pub struct Square {
-    pub block_group: BlockGroup
+    pub block_group: BlockGroup,
 }
 
 impl Square {
