@@ -10,10 +10,10 @@ impl Tee {
         Tee {
             block_group: BlockGroup {
                 blocks: vec![
-                    TetrisBlock::new(4, 19),
-                    TetrisBlock::new(5, 18),
                     TetrisBlock::new(5, 19),
-                    TetrisBlock::new(5, 20),
+                    TetrisBlock::new(4, 18),
+                    TetrisBlock::new(5, 18),
+                    TetrisBlock::new(6, 18),
                 ]
             }
         }
