@@ -32,7 +32,7 @@ impl TetrisEngine {
     }
 
     pub fn with_initial_state(initial_state: Vec<TetrisBlock>, shape_generator: fn() -> Box<dyn PlayableShape>) -> TetrisEngine {
-        TetrisEngine { current_shape: Box::new(Square::new()), merged_blocks: initial_state, generate_next_shape: shape_generator }
+        TetrisEngine { current_shape: shape_generator(), merged_blocks: initial_state, generate_next_shape: shape_generator }
     }
 
     pub fn tick(&mut self) {
@@ -115,7 +115,7 @@ impl TetrisEngine {
 
         let rows_removed = block_count_per_row.iter().filter(|&&count| count == 10).count() as u32;
 
-        self.merged_blocks.iter_mut().for_each(|mut block| {
+        self.merged_blocks.iter_mut().for_each(|block| {
             block.y = block.y - rows_removed;
         });
     }
