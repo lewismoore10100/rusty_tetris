@@ -34,6 +34,10 @@ fn main() {
                 tetris_engine.drop();
             }
 
+            if input.key_pressed(KeyCode::ControlLeft) {
+                tetris_engine.rotate();
+            }
+
             render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
 
             frame_rate_limiter.tick(|| {

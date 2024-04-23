@@ -67,6 +67,10 @@ impl TetrisEngine {
         }
     }
 
+    pub fn rotate(&mut self) {
+        self.current_shape.rotate();
+    }
+
     fn can_move_right(&self, blocks_to_test: &[TetrisBlock]) -> bool {
         self.can_move(blocks_to_test, 1, 0)
     }

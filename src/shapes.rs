@@ -39,4 +39,5 @@ pub trait PlayableShape {
     }
     fn block_group_mut(&mut self) -> &mut BlockGroup;
     fn block_group(&self) -> &BlockGroup;
+    fn rotate(&mut self){}
 }
