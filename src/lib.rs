@@ -9,17 +9,21 @@ mod tee;
 mod tests {
     use crate::shapes::PlayableShape;
     use crate::square::Square;
+    use crate::tee::Tee;
     use crate::test_utils::{are_equal, run};
     use crate::tetris_block::TetrisBlock;
     use crate::tetris_engine::TetrisEngine;
 
-    fn shape_generator() -> Box<dyn PlayableShape>{
+    fn square_generator() -> Box<dyn PlayableShape>{
         Box::new(Square::new())
+    }
+    fn tee_generator() -> Box<dyn PlayableShape>{
+        Box::new(Tee::new())
     }
 
     #[test]
     fn on_first_tick_a_single_square_is_put_into_play() {
-        let tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
@@ -33,7 +37,7 @@ mod tests {
 
     #[test]
     fn block_can_be_moved_left_when_user_presses_left() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
         tetris_engine.move_left();
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -48,7 +52,7 @@ mod tests {
 
     #[test]
     fn block_can_not_move_out_of_bounds_on_the_left() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         run(|| {
             tetris_engine.move_left();
@@ -67,7 +71,7 @@ mod tests {
 
     #[test]
     fn block_can_be_moved_right_when_user_presses_right() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
         tetris_engine.move_right();
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -82,7 +86,7 @@ mod tests {
 
     #[test]
     fn block_can_not_move_out_of_bounds_on_the_right() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         run(|| {
             tetris_engine.move_right();
@@ -108,7 +112,7 @@ mod tests {
                 TetrisBlock::new(8, 18),
                 TetrisBlock::new(9, 18),
             ],
-            shape_generator
+            tee_generator
         );
 
         run(|| {
@@ -139,7 +143,7 @@ mod tests {
                 TetrisBlock::new(0, 18),
                 TetrisBlock::new(1, 18),
             ],
-            shape_generator
+            tee_generator
         );
 
         run(|| {
@@ -163,7 +167,7 @@ mod tests {
 
     #[test]
     fn block_drops_when_user_presses_down() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
         tetris_engine.drop();
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -182,7 +186,7 @@ mod tests {
 
     #[test]
     fn incrementing_tick_moves_the_current_square_down() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         tetris_engine.tick();
 
@@ -198,7 +202,7 @@ mod tests {
 
     #[test]
     fn first_block_stops_when_hitting_bottom() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         run(|| { tetris_engine.tick() }, 19);
 
@@ -218,7 +222,7 @@ mod tests {
 
     #[test]
     fn blocks_collide_and_stack() {
-        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], shape_generator);
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         run(|| { tetris_engine.tick() }, 36);
 
@@ -253,7 +257,7 @@ mod tests {
                 TetrisBlock::new(8, 0),
                 TetrisBlock::new(9, 0),
             ],
-            shape_generator
+            tee_generator
         );
 
         run(|| { tetris_engine.tick() }, 19);

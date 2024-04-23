@@ -6,7 +6,7 @@ pub struct Tee {
 }
 
 impl Tee {
-    pub(crate) fn new() -> Tee {
+    pub fn new() -> Tee {
         Tee {
             block_group: BlockGroup {
                 blocks: vec![
