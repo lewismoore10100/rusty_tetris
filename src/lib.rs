@@ -308,7 +308,7 @@ mod tests {
     }
 
     #[test]
-    fn a_tee_can_be_rotated_18_degrees() {
+    fn a_tee_can_be_rotated_180_degrees() {
         let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
         tetris_engine.tick();
@@ -322,6 +322,25 @@ mod tests {
                               TetrisBlock::new(6, 17),
                               TetrisBlock::new(5, 17),
                               TetrisBlock::new(4, 17),
+                          ],
+        ))
+    }
+
+    #[test]
+    fn a_tee_can_be_rotated_270_degrees() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+
+        tetris_engine.tick();
+
+        run(||{tetris_engine.rotate()},3);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(5, 17),
+                              TetrisBlock::new(5, 16),
                           ],
         ))
     }
