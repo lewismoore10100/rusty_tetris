@@ -56,7 +56,12 @@ impl PlayableShape for Tee {
                 self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
                 self.rotation_position = W;
             }
-            W => {}
+            W => {
+                self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
+                self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
+                self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
+                self.rotation_position = N;
+            }
         }
     }
 }
