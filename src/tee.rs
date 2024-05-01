@@ -37,31 +37,34 @@ impl PlayableShape for Tee {
     }
 
     fn rotate(&mut self) {
-        match self.rotation_position {
-            N => {
-                self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                self.rotation_position = E;
-            }
-            E => {
-                self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                self.rotation_position = S;
-            }
-            S => {
-                self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                self.rotation_position = W;
-            }
-            W => {
-                self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                self.rotation_position = N;
+        if !self.block_group.blocks.iter().any(|b| b.x == 9){
+            match self.rotation_position {
+                N => {
+                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
+                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
+                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
+                    self.rotation_position = E;
+                }
+                E => {
+                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
+                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
+                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
+                    self.rotation_position = S;
+                }
+                S => {
+                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
+                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
+                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
+                    self.rotation_position = W;
+                }
+                W => {
+                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
+                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
+                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
+                    self.rotation_position = N;
+                }
             }
         }
+
     }
 }

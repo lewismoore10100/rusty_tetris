@@ -363,4 +363,21 @@ mod tests {
                           ],
         ))
     }
+
+    #[test]
+    fn a_tee_can_not_be_rotated_out_of_bounds_on_the_right() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+
+        run(||{tetris_engine.move_right()},5);
+        tetris_engine.rotate();
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(8, 19),
+                              TetrisBlock::new(7, 18),
+                              TetrisBlock::new(8, 18),
+                              TetrisBlock::new(9, 18),
+                          ],
+        ))
+    }
 }
