@@ -368,16 +368,38 @@ mod tests {
     fn a_tee_can_not_be_rotated_out_of_bounds_on_the_right() {
         let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
-        run(||{tetris_engine.move_right()},5);
-        tetris_engine.rotate();
+        tetris_engine.tick();
+        run(||{tetris_engine.rotate()},3);
+        run(||{tetris_engine.move_right()},4);
+        run(||{tetris_engine.rotate()},3);
+
 
         assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                           &vec![
-                              TetrisBlock::new(8, 19),
-                              TetrisBlock::new(7, 18),
-                              TetrisBlock::new(8, 18),
+                              TetrisBlock::new(8, 17),
                               TetrisBlock::new(9, 18),
+                              TetrisBlock::new(9, 17),
+                              TetrisBlock::new(9, 16),
                           ],
+        ))
+    }
+
+    #[test]
+    fn a_tee_can_be_rotated_near_the_border_on_the_right() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+
+        tetris_engine.tick();
+        run(||{tetris_engine.rotate()},2);
+        run(||{tetris_engine.move_right()},5);
+        run(||{tetris_engine.rotate()},1);
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(7, 17),
+                              TetrisBlock::new(8, 18),
+                              TetrisBlock::new(8, 17),
+                              TetrisBlock::new(8, 16),
+                          ]
         ))
     }
 }

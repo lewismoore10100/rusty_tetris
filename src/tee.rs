@@ -3,12 +3,15 @@ use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
 enum RotationPosition {
-    N,E,S,W
+    N,
+    E,
+    S,
+    W,
 }
 
 pub struct Tee {
     pub block_group: BlockGroup,
-    pub rotation_position: RotationPosition
+    pub rotation_position: RotationPosition,
 }
 
 impl Tee {
@@ -22,7 +25,7 @@ impl Tee {
                     TetrisBlock::new(6, 18),
                 ]
             },
-            rotation_position: N
+            rotation_position: N,
         }
     }
 }
@@ -37,34 +40,49 @@ impl PlayableShape for Tee {
     }
 
     fn rotate(&mut self) {
-        if !self.block_group.blocks.iter().any(|b| b.x == 9){
-            match self.rotation_position {
-                N => {
-                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                    self.rotation_position = E;
-                }
-                E => {
-                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                    self.rotation_position = S;
-                }
-                S => {
-                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y += 1; Some(b)});
-                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y -= 1; Some(b)});
-                    self.rotation_position = W;
-                }
-                W => {
-                    self.block_group.blocks.get_mut(0).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                    self.block_group.blocks.get_mut(1).and_then(|b|{b.x -= 1; b.y -= 1; Some(b)});
-                    self.block_group.blocks.get_mut(3).and_then(|b|{b.x += 1; b.y += 1; Some(b)});
-                    self.rotation_position = N;
-                }
+        let rotated_block = match self.rotation_position {
+            N => {
+                vec![
+                    self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y - 1))).unwrap(),
+                    self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y + 1))).unwrap(),
+                    self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::new(b.x, b.y))).unwrap(),
+                    self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y - 1))).unwrap()
+                ]
+            }
+            E => {
+                vec![
+                    self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y - 1))).unwrap(),
+                    self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y - 1))).unwrap(),
+                    self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::new(b.x, b.y))).unwrap(),
+                    self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y + 1))).unwrap()
+                ]
+            }
+            S => {
+                vec![
+                    self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y + 1))).unwrap(),
+                    self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y + 1))).unwrap(),
+                    self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::new(b.x, b.y))).unwrap(),
+                    self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y - 1))).unwrap()
+                ]
+            }
+            W => {
+                vec![
+                    self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y + 1))).unwrap(),
+                    self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::new(b.x - 1, b.y - 1))).unwrap(),
+                    self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::new(b.x, b.y))).unwrap(),
+                    self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::new(b.x + 1, b.y + 1))).unwrap()
+                ]
+            }
+        };
+
+        if !rotated_block.iter().any(|b| b.x == 10){
+            self.block_group = BlockGroup{blocks: rotated_block};
+            self.rotation_position = match self.rotation_position {
+                N => {E}
+                E => {S}
+                S => {W}
+                W => {N}
             }
         }
-
     }
 }
