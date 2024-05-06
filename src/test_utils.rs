@@ -11,10 +11,14 @@ pub fn are_equal(actual: &Vec<&TetrisBlock>, expected: &Vec<TetrisBlock>) -> boo
     let are_same_length = actual.len() == expected.len();
 
     if !contains_same_items || !are_same_length {
-        eprintln!("{}", "Actual:");
-        serde_json::to_writer_pretty(std::io::stderr(), actual).unwrap();
-        eprintln!("{}", "Expected:");
-        serde_json::to_writer_pretty(std::io::stderr(), expected).unwrap();
+        eprintln!("|{}|","Actual");
+        actual.iter().for_each(|b|{
+            eprintln!("| x:{} y:{} id:{} |", b.x, b.y, b.id);
+        });
+        eprintln!("|{}|","Expected");
+        expected.iter().for_each(|b|{
+            eprintln!("| x:{} y:{} id:{} |", b.x, b.y, b.id);
+        });
         false
     } else {
         true

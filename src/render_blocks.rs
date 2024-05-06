@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
 use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
+use blue_engine::uniform_type::Array4;
 
 use crate::tetris_block::TetrisBlock;
 
@@ -44,7 +45,9 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                     },
                     renderer,
                 ).unwrap();
-                objects.get_mut(&block.id).unwrap()
+                let new_object = objects.get_mut(&block.id).unwrap();
+                new_object.uniform_color = Array4 {data: block.color};
+                new_object
             }
         };
         block_in_object_store.set_position((-1.0) + (block.x as f32 / 5.0), (-1.0) + (block.y as f32 / 10.0), 0.0);
