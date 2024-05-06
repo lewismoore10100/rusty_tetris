@@ -109,7 +109,7 @@ impl TetrisEngine {
             return;
         }
 
-        let mut block_count_per_row: [u32; 20] = [0; 20];
+        let mut block_count_per_row: [i32; 20] = [0; 20];
 
         self.merged_blocks.iter().for_each(|block| {
             block_count_per_row[block.y as usize] = block_count_per_row[block.y as usize] + 1
@@ -117,7 +117,7 @@ impl TetrisEngine {
 
         self.merged_blocks.retain(|block| { block_count_per_row[block.y as usize] != 10 });
 
-        let rows_removed = block_count_per_row.iter().filter(|&&count| count == 10).count() as u32;
+        let rows_removed = block_count_per_row.iter().filter(|&&count| count == 10).count() as i32;
 
         self.merged_blocks.iter_mut().for_each(|block| {
             block.y = block.y - rows_removed;

@@ -75,7 +75,7 @@ impl PlayableShape for Tee {
             }
         };
 
-        if !rotated_block.iter().any(|b| b.x == 10){
+        if !rotated_block.iter().any(|b| b.x == 10 || b.x == -1){
             self.block_group = BlockGroup{blocks: rotated_block};
             self.rotation_position = match self.rotation_position {
                 N => {E}

@@ -385,6 +385,26 @@ mod tests {
     }
 
     #[test]
+    fn a_tee_can_not_be_rotated_out_of_bounds_on_the_left() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+
+        tetris_engine.tick();
+        run(||{tetris_engine.rotate()},1);
+        run(||{tetris_engine.move_left()},5);
+        run(||{tetris_engine.rotate()},1);
+
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(1, 17),
+                              TetrisBlock::new(0, 18),
+                              TetrisBlock::new(0, 17),
+                              TetrisBlock::new(0, 16),
+                          ],
+        ))
+    }
+
+    #[test]
     fn a_tee_can_be_rotated_near_the_border_on_the_right() {
         let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
