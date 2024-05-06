@@ -13,6 +13,14 @@ impl TetrisBlock {
         TetrisBlock { x, y, id: random_string(), color: [0f32, 0f32, 1f32, 1f32] }
     }
 
+    pub fn new_with_color(x: i32, y: i32, color: [f32; 4]) -> TetrisBlock {
+        TetrisBlock { x, y, id: random_string(), color}
+    }
+
+    pub fn from_with_new_position(existing: &TetrisBlock, x: i32, y: i32) -> TetrisBlock {
+        TetrisBlock { x, y, id: String::from(&existing.id), color: existing.color}
+    }
+
     pub fn same_position(&self, other: &TetrisBlock) -> bool {
         self.x == other.x && self.y == other.y
     }
