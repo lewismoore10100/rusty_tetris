@@ -36,31 +36,24 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        if !self.can_move_down(self.current_shape.blocks()) {
+        if self.current_shape.move_down(self.merged_blocks.as_slice()).is_err() {
             self.current_shape.drain_to(&mut self.merged_blocks);
             self.remove_completed_rows();
             self.current_shape = (self.generate_next_shape)()
-        } else {
-            self.current_shape.move_down();
         }
     }
 
     pub fn move_left(&mut self) {
-        if self.can_move_left(self.current_shape.blocks()) {
-            self.current_shape.move_left();
-        }
+        self.current_shape.move_left(self.merged_blocks.as_slice());
     }
 
     pub fn move_right(&mut self) {
-        if self.can_move_right(self.current_shape.blocks()) {
-            self.current_shape.move_right();
-        }
+        self.current_shape.move_right(self.merged_blocks.as_slice());
     }
 
     pub fn drop(&mut self) {
         loop {
-            self.current_shape.move_down();
-            if !self.can_move_down(self.current_shape.blocks()) {
+            if self.current_shape.move_down(self.merged_blocks.as_slice()).is_err() {
                 self.tick();
                 break;
             }
@@ -69,39 +62,6 @@ impl TetrisEngine {
 
     pub fn rotate(&mut self) {
         self.current_shape.rotate();
-    }
-
-    fn can_move_right(&self, blocks_to_test: &[TetrisBlock]) -> bool {
-        self.can_move(blocks_to_test, 1, 0)
-    }
-
-    fn can_move_left(&self, blocks_to_test: &[TetrisBlock]) -> bool {
-        self.can_move(blocks_to_test, -1, 0)
-    }
-
-    fn can_move_down(&self, blocks_to_test: &[TetrisBlock]) -> bool {
-        self.can_move(blocks_to_test, 0, -1)
-    }
-
-    fn can_move(&self, blocks_to_test: &[TetrisBlock], x_movement: i32, y_movement: i32) -> bool {
-        for block_to_test in blocks_to_test {
-            if block_to_test.y as i32 + y_movement == -1 {
-                return false;
-            }
-            if block_to_test.x as i32 + x_movement == -1 {
-                return false;
-            }
-            if block_to_test.x as i32 + x_movement == 10 {
-                return false;
-            }
-
-            for merged_block in &self.merged_blocks {
-                if block_to_test.x as i32 + x_movement == merged_block.x as i32 && block_to_test.y as i32 + y_movement == merged_block.y as i32 {
-                    return false;
-                }
-            }
-        }
-        true
     }
 
     fn remove_completed_rows(&mut self) {
