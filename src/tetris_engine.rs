@@ -75,13 +75,16 @@ impl TetrisEngine {
             block_count_per_row[block.y as usize] = block_count_per_row[block.y as usize] + 1
         });
 
-        self.merged_blocks.retain(|block| { block_count_per_row[block.y as usize] != 10 });
-
-        let rows_removed = block_count_per_row.iter().filter(|&&count| count == 10).count() as i32;
-
-        self.merged_blocks.iter_mut().for_each(|block| {
-            block.y = block.y - rows_removed;
-        });
+        for row_check_index in 0..19 {
+            if block_count_per_row[row_check_index] == 10 {
+                self.merged_blocks.retain(|block| { block.y != row_check_index as i32 });
+                for mut remaining_block in &mut self.merged_blocks {
+                    if remaining_block.y > row_check_index as i32 {
+                        remaining_block.y -= 1;
+                    }
+                }
+            }
+        }
     }
 
     pub fn blocks_for_rendering(&self) -> Vec<&TetrisBlock> {

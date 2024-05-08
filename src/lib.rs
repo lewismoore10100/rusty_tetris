@@ -276,6 +276,36 @@ mod tests {
     }
 
     #[test]
+    fn drops_blocks_above_removed_row() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(
+            vec![
+                TetrisBlock::new(0, 1),
+                TetrisBlock::new(1, 1),
+                TetrisBlock::new(2, 1),
+                TetrisBlock::new(3, 1),
+                TetrisBlock::new(6, 1),
+                TetrisBlock::new(7, 1),
+                TetrisBlock::new(8, 1),
+                TetrisBlock::new(9, 1),
+            ],
+            square_generator,
+        );
+
+        run(|| { tetris_engine.tick() }, 19);
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(5, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(5, 18),
+                              TetrisBlock::new(4, 0),
+                              TetrisBlock::new(5, 0),
+                          ],
+        ));
+    }
+
+    #[test]
     fn on_first_tick_a_single_tee_is_put_into_play() {
         let tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
