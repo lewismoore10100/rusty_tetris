@@ -55,5 +55,7 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
         block_in_object_store.set_position((-1.0) + (block.x as f32 / 5.0), (-1.0) + (block.y as f32 / 10.0), 0.0);
     });
 
-    objects.retain(|b, o| block_ids_to_render.contains(b));
+    if objects.len() != block_ids_to_render.len() {
+        objects.retain(|b, _| block_ids_to_render.contains(b));
+    }
 }
