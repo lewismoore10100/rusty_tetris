@@ -9,13 +9,15 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
     let mut block_ids_to_render: HashSet<String> = HashSet::with_capacity(blocks.len());
 
     blocks.iter().for_each(|block| {
-        block_ids_to_render.insert(String::from(&block.id));
+        let id_as_string = format!("{}", block.id);
 
-        let block_in_object_store = match objects.get_mut(&block.id) {
+        block_ids_to_render.insert(id_as_string.clone());
+
+        let block_in_object_store = match objects.get_mut(&id_as_string) {
             Some(b) => b,
             None => {
                 objects.new_object(
-                    String::from(&block.id),
+                    id_as_string.clone(),
                     vec![
                         Vertex {
                             position: [0.0, 0.0, 0.0],
@@ -45,7 +47,7 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                     },
                     renderer,
                 ).unwrap();
-                let new_object = objects.get_mut(&block.id).unwrap();
+                let new_object = objects.get_mut(&id_as_string).unwrap();
                 new_object.uniform_color = Array4 {data: block.color};
                 new_object
             }

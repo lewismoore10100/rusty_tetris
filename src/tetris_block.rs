@@ -1,10 +1,7 @@
-use std::time::Instant;
-use rand::Rng;
-
 pub struct TetrisBlock {
     pub x: i32,
     pub y: i32,
-    pub id: String,
+    pub id: i32,
     pub color: [f32; 4]
 }
 
@@ -18,7 +15,7 @@ impl TetrisBlock {
     }
 
     pub fn from_with_new_position(existing: &TetrisBlock, x: i32, y: i32) -> TetrisBlock {
-        TetrisBlock { x, y, id: String::from(&existing.id), color: existing.color}
+        TetrisBlock { x, y, id: existing.id, color: existing.color}
     }
 
     pub fn same_position(&self, other: &TetrisBlock) -> bool {
@@ -27,10 +24,10 @@ impl TetrisBlock {
 }
 
 static mut next_id: i32 = 0;
-fn generate_id() -> String {
+fn generate_id() -> i32 {
     unsafe {
         next_id += 1;
-        format!("{}", next_id)
+        next_id
     }
 }
 
