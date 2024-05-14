@@ -1,5 +1,5 @@
+use std::time::Instant;
 use rand::Rng;
-use serde::Serialize;
 
 pub struct TetrisBlock {
     pub x: i32,
@@ -10,11 +10,11 @@ pub struct TetrisBlock {
 
 impl TetrisBlock {
     pub fn new(x: i32, y: i32) -> TetrisBlock {
-        TetrisBlock { x, y, id: random_string(), color: [0f32, 0f32, 1f32, 1f32] }
+        TetrisBlock { x, y, id: generate_id(), color: [0f32, 0f32, 1f32, 1f32] }
     }
 
     pub fn new_with_color(x: i32, y: i32, color: [f32; 4]) -> TetrisBlock {
-        TetrisBlock { x, y, id: random_string(), color}
+        TetrisBlock { x, y, id: generate_id(), color}
     }
 
     pub fn from_with_new_position(existing: &TetrisBlock, x: i32, y: i32) -> TetrisBlock {
@@ -26,8 +26,12 @@ impl TetrisBlock {
     }
 }
 
-fn random_string() -> String {
-    (0..100).map(|_| char::from(rand::thread_rng().gen_range(32..127))).collect()
+static mut next_id: i32 = 0;
+fn generate_id() -> String {
+    unsafe {
+        next_id += 1;
+        format!("{}", next_id)
+    }
 }
 
 
