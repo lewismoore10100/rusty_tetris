@@ -68,21 +68,21 @@ impl TetrisEngine {
         if self.merged_blocks.len() < 10 {
             return;
         }
+        self.remove_completed_rows_starting_from(0);
+    }
 
+    fn remove_completed_rows_starting_from(&mut self, row: i32){
+        if row > 19 {
+            return;
+        }
 
-        let mut row_to_check = 0;
-        loop {
-            if self.merged_blocks.iter().filter(|b| b.y == row_to_check).count() == 10 {
-                self.merged_blocks.retain(|b| { b.y != row_to_check});
-                self.merged_blocks.iter_mut().for_each(|b| { if b.y > row_to_check {b.y -= 1}})
-            }
-            else {
-                row_to_check += 1;
-            }
-
-            if row_to_check == 19 {
-                break;
-            }
+        if self.merged_blocks.iter().filter(|b| b.y == row).count() == 10 {
+            self.merged_blocks.retain(|b| { b.y != row});
+            self.merged_blocks.iter_mut().for_each(|b| { if b.y > row {b.y -= 1}});
+            self.remove_completed_rows_starting_from(row);
+        }
+        else {
+            self.remove_completed_rows_starting_from(row+1)
         }
     }
 
