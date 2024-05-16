@@ -69,20 +69,19 @@ impl TetrisEngine {
             return;
         }
 
-        let mut block_count_per_row: [i32; 20] = [0; 20];
 
-        self.merged_blocks.iter().for_each(|block| {
-            block_count_per_row[block.y as usize] = block_count_per_row[block.y as usize] + 1
-        });
+        let mut row_to_check = 0;
+        loop {
+            if self.merged_blocks.iter().filter(|b| b.y == row_to_check).count() == 10 {
+                self.merged_blocks.retain(|b| { b.y != row_to_check});
+                self.merged_blocks.iter_mut().for_each(|b| { if b.y > row_to_check {b.y -= 1}})
+            }
+            else {
+                row_to_check += 1;
+            }
 
-        for row_check_index in 0..19 {
-            if block_count_per_row[row_check_index] == 10 {
-                self.merged_blocks.retain(|block| { block.y != row_check_index as i32 });
-                for mut remaining_block in &mut self.merged_blocks {
-                    if remaining_block.y > row_check_index as i32 {
-                        remaining_block.y -= 1;
-                    }
-                }
+            if row_to_check == 19 {
+                break;
             }
         }
     }
