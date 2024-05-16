@@ -19,8 +19,6 @@ impl SpeedLimiter {
         if Instant::now() - self.last_time >= self.duration_between_action {
             f();
             self.last_time = Instant::now();
-        } else {
-            thread::sleep(Duration::from_millis(50));
         }
     }
 }
