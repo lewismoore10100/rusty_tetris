@@ -5,10 +5,7 @@ use crate::tetris_block::TetrisBlock;
 
 pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
 
-
-
     blocks.iter().for_each(|block| {
-
         let block_in_object_store = match objects.get_mut(&block.id) {
             Some(b) => b,
             None => {
@@ -64,6 +61,5 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
     if objects.len() != blocks.len() {
         objects.retain(|b, _| blocks.iter().any(|b2| b2.id.eq(b)));
     }
-
 
 }
