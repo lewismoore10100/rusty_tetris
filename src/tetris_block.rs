@@ -1,4 +1,3 @@
-use std::fmt::format;
 
 pub struct TetrisBlock {
     pub x: i32,

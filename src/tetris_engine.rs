@@ -1,9 +1,12 @@
-use crate::shapes::{PlayableShape};
+extern crate rand;
+
+use rand::Rng;
+
+use crate::l::L;
+use crate::shapes::PlayableShape;
 use crate::square::Square;
 use crate::tee::Tee;
 use crate::tetris_block::TetrisBlock;
-extern crate rand;
-use rand::Rng;
 
 pub struct TetrisEngine {
     current_shape: Box<dyn PlayableShape>,
@@ -13,11 +16,12 @@ pub struct TetrisEngine {
 
 fn random_shape_generator() -> Box<dyn PlayableShape>{
     let mut rng = rand::thread_rng();
-    let random_number = rng.gen_range(0..2);
+    let random_number = rng.gen_range(0..3);
 
     match random_number {
         0 => Box::new(Square::new()),
         1 => Box::new(Tee::new()),
+        2 => Box::new(L::new()),
         _ => Box::new(Square::new())
     }
 }

@@ -1,5 +1,3 @@
-use std::time::Instant;
-
 use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
 use blue_engine::uniform_type::Array4;
 
@@ -7,7 +5,7 @@ use crate::tetris_block::TetrisBlock;
 
 pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
 
-    let start_time = Instant::now();
+
 
     blocks.iter().for_each(|block| {
 
@@ -50,12 +48,22 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                 new_object
             }
         };
-        block_in_object_store.set_position((-1.0) + (block.x as f32 / 5.0), (-1.0) + (block.y as f32 / 10.0), 0.0);
+
+
+        let new_x = (-1.0) + (block.x as f32 / 5.0);
+        let new_y = (-1.0) + (block.y as f32 / 10.0);
+
+        //let start_time = Instant::now();
+
+        if block_in_object_store.position.x != new_x || block_in_object_store.position.y != new_y {
+            block_in_object_store.set_position(new_x, new_y, 0.0);
+        }
+        //println!("{}", start_time.elapsed().as_micros());
     });
 
     if objects.len() != blocks.len() {
         objects.retain(|b, _| blocks.iter().any(|b2| b2.id.eq(b)));
     }
 
-    println!("{}", start_time.elapsed().as_micros());
+
 }

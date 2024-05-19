@@ -4,9 +4,11 @@ mod shapes;
 mod test_utils;
 mod square;
 mod tee;
+mod l;
 
 #[cfg(test)]
 mod tests {
+    use crate::l::L;
     use crate::shapes::PlayableShape;
     use crate::square::Square;
     use crate::tee::Tee;
@@ -14,10 +16,12 @@ mod tests {
     use crate::tetris_block::TetrisBlock;
     use crate::tetris_engine::TetrisEngine;
 
+    fn l_generator() -> Box<dyn PlayableShape> {
+        Box::new(L::new())
+    }
     fn tee_generator() -> Box<dyn PlayableShape> {
         Box::new(Tee::new())
     }
-
     fn square_generator() -> Box<dyn PlayableShape> {
         Box::new(Square::new())
     }
@@ -450,6 +454,20 @@ mod tests {
                               TetrisBlock::new(8, 17),
                               TetrisBlock::new(8, 16),
                           ]
+        ))
+    }
+
+    #[test]
+    fn on_first_tick_a_single_l_is_put_into_play() {
+        let tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(4, 19),
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(5, 17),
+                          ],
         ))
     }
 }
