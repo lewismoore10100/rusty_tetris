@@ -24,11 +24,11 @@ impl TetrisBlock {
     }
 }
 
-static mut next_id: i32 = 0;
+static mut NEXT_ID: i32 = 0;
 fn generate_id() -> i32 {
     unsafe {
-        next_id += 1;
-        next_id
+        NEXT_ID += 1;
+        NEXT_ID
     }
 }
 
