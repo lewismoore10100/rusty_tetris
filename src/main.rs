@@ -14,6 +14,8 @@ mod shapes;
 mod square;
 mod tee;
 mod l;
+mod rotation_position;
+
 fn main() {
     let rendering_engine = setup_engine();
 

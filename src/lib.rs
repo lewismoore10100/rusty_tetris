@@ -5,6 +5,7 @@ mod test_utils;
 mod square;
 mod tee;
 mod l;
+mod rotation_position;
 
 #[cfg(test)]
 mod tests {
@@ -467,6 +468,23 @@ mod tests {
                               TetrisBlock::new(4, 18),
                               TetrisBlock::new(4, 17),
                               TetrisBlock::new(5, 17),
+                          ],
+        ))
+    }
+
+    #[test]
+    fn a_l_can_be_rotated_90_degrees() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
+
+        tetris_engine.tick();
+        tetris_engine.rotate();
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(6, 17),
+                              TetrisBlock::new(5, 17),
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(4, 16),
                           ],
         ))
     }

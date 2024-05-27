@@ -1,14 +1,7 @@
-use RotationPosition::{E, N, S, W};
-
+use crate::rotation_position::RotationPosition;
+use crate::rotation_position::RotationPosition::{E, N, S, W};
 use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
-
-enum RotationPosition {
-    N,
-    E,
-    S,
-    W,
-}
 
 pub struct Tee {
     pub block_group: BlockGroup,
