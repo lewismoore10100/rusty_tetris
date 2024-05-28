@@ -523,4 +523,21 @@ mod tests {
                           ],
         ))
     }
+
+    #[test]
+    fn a_l_can_be_rotated_360_degrees() {
+        let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
+
+        tetris_engine.tick();
+        run(|| {tetris_engine.rotate()}, 4);
+
+        assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                          &vec![
+                              TetrisBlock::new(4, 18),
+                              TetrisBlock::new(4, 17),
+                              TetrisBlock::new(4, 16),
+                              TetrisBlock::new(5, 16),
+                          ],
+        ))
+    }
 }
