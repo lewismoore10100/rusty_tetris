@@ -59,7 +59,7 @@ impl PlayableShape for L {
                     self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y))).unwrap()
                 ]
             }
-            _ => {vec![
+            W => {vec![
                 self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y + 2))).unwrap(),
                 self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x , b.y + 1))).unwrap(),
                 self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 1 , b.y))).unwrap(),
