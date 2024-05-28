@@ -217,7 +217,7 @@ fn first_block_stops_when_hitting_bottom() {
 }
 
 #[test]
-fn blocks_collide_and_stack() {
+fn blocks_collide_and_stacks() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
 
     run(|| { tetris_engine.tick() }, 36);
