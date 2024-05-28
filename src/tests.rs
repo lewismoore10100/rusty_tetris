@@ -163,6 +163,7 @@ fn current_shape_can_not_overlap_existing_blocks_when_moving_left() {
 #[test]
 fn block_drops_when_user_presses_down() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
+
     tetris_engine.drop();
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
