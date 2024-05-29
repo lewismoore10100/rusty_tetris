@@ -533,7 +533,7 @@ fn a_l_can_be_rotated_360_degrees() {
 }
 
 #[test]
-fn completing_a_single_row_scores_100_points() {
+fn completing_a_single_row_scores_40_points() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![
         TetrisBlock::new(0, 0),
         TetrisBlock::new(1, 0),
@@ -550,4 +550,36 @@ fn completing_a_single_row_scores_100_points() {
     run(|| {tetris_engine.tick()}, 20);
 
     assert_eq!(tetris_engine.score(), 40);
+}
+
+#[test]
+fn completing_a_double_row_scores_100_points() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![
+        TetrisBlock::new(0, 0),
+        TetrisBlock::new(1, 0),
+        TetrisBlock::new(2, 0),
+        TetrisBlock::new(3, 0),
+        TetrisBlock::new(4, 0),
+        TetrisBlock::new(5, 0),
+        TetrisBlock::new(6, 0),
+        TetrisBlock::new(7, 0),
+        TetrisBlock::new(8, 0),
+        TetrisBlock::new(9, 0),
+
+        TetrisBlock::new(0, 1),
+        TetrisBlock::new(1, 1),
+        TetrisBlock::new(2, 1),
+        TetrisBlock::new(3, 1),
+        TetrisBlock::new(4, 1),
+        TetrisBlock::new(5, 1),
+        TetrisBlock::new(6, 1),
+        TetrisBlock::new(7, 1),
+        TetrisBlock::new(8, 1),
+        TetrisBlock::new(9, 1),
+
+    ], l_generator);
+
+    run(|| {tetris_engine.tick()}, 20);
+
+    assert_eq!(tetris_engine.score(), 100);
 }
