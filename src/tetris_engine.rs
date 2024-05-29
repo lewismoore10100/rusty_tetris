@@ -11,7 +11,8 @@ use crate::tetris_block::TetrisBlock;
 pub struct TetrisEngine {
     current_shape: Box<dyn PlayableShape>,
     merged_blocks: Vec<TetrisBlock>,
-    generate_next_shape: fn() -> Box<dyn PlayableShape>
+    generate_next_shape: fn() -> Box<dyn PlayableShape>,
+    score: u32
 }
 
 fn random_shape_generator() -> Box<dyn PlayableShape>{
@@ -31,12 +32,22 @@ impl TetrisEngine {
         TetrisEngine {
             current_shape: Box::new(Square::new()),
             merged_blocks: vec![],
-            generate_next_shape: random_shape_generator
+            generate_next_shape: random_shape_generator,
+            score: 0
         }
     }
 
     pub fn with_initial_state(initial_state: Vec<TetrisBlock>, shape_generator: fn() -> Box<dyn PlayableShape>) -> TetrisEngine {
-        TetrisEngine { current_shape: shape_generator(), merged_blocks: initial_state, generate_next_shape: shape_generator }
+        TetrisEngine {
+            current_shape: shape_generator(),
+            merged_blocks: initial_state,
+            generate_next_shape: shape_generator,
+            score: 0
+        }
+    }
+
+    pub fn score(&self) -> u32 {
+        self.score
     }
 
     pub fn tick(&mut self) {
@@ -72,21 +83,32 @@ impl TetrisEngine {
         if self.merged_blocks.len() < 10 {
             return;
         }
-        self.remove_completed_rows_starting_from(0);
+        let removed_rows = self.remove_completed_rows_starting_from(0);
+        self.score = self.score + Self::calculate_score(removed_rows);
     }
 
-    fn remove_completed_rows_starting_from(&mut self, row: i32){
+    fn remove_completed_rows_starting_from(&mut self, row: i32) -> u32{
         if row > 19 {
-            return;
+            return 0;
         }
 
         if self.merged_blocks.iter().filter(|b| b.y == row).count() == 10 {
             self.merged_blocks.retain(|b| { b.y != row});
             self.merged_blocks.iter_mut().for_each(|b| { if b.y > row {b.y -= 1}});
-            self.remove_completed_rows_starting_from(row);
+            return self.remove_completed_rows_starting_from(row) + 1;
         }
         else {
-            self.remove_completed_rows_starting_from(row+1)
+            return self.remove_completed_rows_starting_from(row+1);
+        }
+    }
+
+    pub fn calculate_score(removed_rows: u32) -> u32{
+        match removed_rows {
+            1 => 40,
+            2 => 10,
+            3 => 300,
+            4 => 1200,
+            _ => 0
         }
     }
 

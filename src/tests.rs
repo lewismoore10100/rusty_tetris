@@ -1,3 +1,4 @@
+use blue_engine::glm::equal;
 use crate::l::L;
 use crate::shapes::PlayableShape;
 use crate::square::Square;
@@ -529,4 +530,24 @@ fn a_l_can_be_rotated_360_degrees() {
                           TetrisBlock::new(5, 16),
                       ],
     ))
+}
+
+#[test]
+fn completing_a_single_row_scores_100_points() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![
+        TetrisBlock::new(0, 0),
+        TetrisBlock::new(1, 0),
+        TetrisBlock::new(2, 0),
+        TetrisBlock::new(3, 0),
+        TetrisBlock::new(4, 0),
+        TetrisBlock::new(5, 0),
+        TetrisBlock::new(6, 0),
+        TetrisBlock::new(7, 0),
+        TetrisBlock::new(8, 0),
+        TetrisBlock::new(9, 0),
+    ], l_generator);
+
+    run(|| {tetris_engine.tick()}, 20);
+
+    assert_eq!(tetris_engine.score(), 40);
 }
