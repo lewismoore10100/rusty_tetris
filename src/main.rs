@@ -15,6 +15,7 @@ mod square;
 mod tee;
 mod l;
 mod rotation_position;
+mod scoring;
 
 fn main() {
     let rendering_engine = setup_engine();

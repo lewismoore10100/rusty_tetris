@@ -6,5 +6,6 @@ mod square;
 mod tee;
 mod l;
 mod rotation_position;
+mod scoring;
 #[cfg(test)]
 mod tests;

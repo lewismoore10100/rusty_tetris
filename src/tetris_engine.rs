@@ -3,6 +3,7 @@ extern crate rand;
 use rand::Rng;
 
 use crate::l::L;
+use crate::scoring::calculate_score;
 use crate::shapes::PlayableShape;
 use crate::square::Square;
 use crate::tee::Tee;
@@ -84,7 +85,7 @@ impl TetrisEngine {
             return;
         }
         let removed_rows = self.remove_completed_rows_starting_from(0);
-        self.score = self.score + Self::calculate_score(removed_rows);
+        self.score = self.score + calculate_score(removed_rows);
     }
 
     fn remove_completed_rows_starting_from(&mut self, row: i32) -> u32{
@@ -99,16 +100,6 @@ impl TetrisEngine {
         }
         else {
             return self.remove_completed_rows_starting_from(row+1);
-        }
-    }
-
-    pub fn calculate_score(removed_rows: u32) -> u32{
-        match removed_rows {
-            1 => 40,
-            2 => 100,
-            3 => 300,
-            4 => 1200,
-            _ => 0
         }
     }
 
