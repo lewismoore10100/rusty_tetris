@@ -583,3 +583,98 @@ fn completing_a_double_row_scores_100_points() {
 
     assert_eq!(tetris_engine.score(), 100);
 }
+
+fn completing_a_triple_row_scores_300_points() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![
+        TetrisBlock::new(0, 0),
+        TetrisBlock::new(1, 0),
+        TetrisBlock::new(2, 0),
+        TetrisBlock::new(3, 0),
+        TetrisBlock::new(4, 0),
+        TetrisBlock::new(5, 0),
+        TetrisBlock::new(6, 0),
+        TetrisBlock::new(7, 0),
+        TetrisBlock::new(8, 0),
+        TetrisBlock::new(9, 0),
+
+        TetrisBlock::new(0, 1),
+        TetrisBlock::new(1, 1),
+        TetrisBlock::new(2, 1),
+        TetrisBlock::new(3, 1),
+        TetrisBlock::new(4, 1),
+        TetrisBlock::new(5, 1),
+        TetrisBlock::new(6, 1),
+        TetrisBlock::new(7, 1),
+        TetrisBlock::new(8, 1),
+        TetrisBlock::new(9, 1),
+
+        TetrisBlock::new(0, 2),
+        TetrisBlock::new(1, 2),
+        TetrisBlock::new(2, 2),
+        TetrisBlock::new(3, 2),
+        TetrisBlock::new(4, 2),
+        TetrisBlock::new(5, 2),
+        TetrisBlock::new(6, 2),
+        TetrisBlock::new(7, 2),
+        TetrisBlock::new(8, 2),
+        TetrisBlock::new(9, 2),
+
+    ], l_generator);
+
+    run(|| {tetris_engine.tick()}, 20);
+
+    assert_eq!(tetris_engine.score(), 300);
+}
+
+fn completing_a_triple_row_scores_1200_points() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![
+        TetrisBlock::new(0, 0),
+        TetrisBlock::new(1, 0),
+        TetrisBlock::new(2, 0),
+        TetrisBlock::new(3, 0),
+        TetrisBlock::new(4, 0),
+        TetrisBlock::new(5, 0),
+        TetrisBlock::new(6, 0),
+        TetrisBlock::new(7, 0),
+        TetrisBlock::new(8, 0),
+        TetrisBlock::new(9, 0),
+
+        TetrisBlock::new(0, 1),
+        TetrisBlock::new(1, 1),
+        TetrisBlock::new(2, 1),
+        TetrisBlock::new(3, 1),
+        TetrisBlock::new(4, 1),
+        TetrisBlock::new(5, 1),
+        TetrisBlock::new(6, 1),
+        TetrisBlock::new(7, 1),
+        TetrisBlock::new(8, 1),
+        TetrisBlock::new(9, 1),
+
+        TetrisBlock::new(0, 2),
+        TetrisBlock::new(1, 2),
+        TetrisBlock::new(2, 2),
+        TetrisBlock::new(3, 2),
+        TetrisBlock::new(4, 2),
+        TetrisBlock::new(5, 2),
+        TetrisBlock::new(6, 2),
+        TetrisBlock::new(7, 2),
+        TetrisBlock::new(8, 2),
+        TetrisBlock::new(9, 2),
+
+        TetrisBlock::new(0, 3),
+        TetrisBlock::new(1, 3),
+        TetrisBlock::new(2, 3),
+        TetrisBlock::new(3, 3),
+        TetrisBlock::new(4, 3),
+        TetrisBlock::new(5, 3),
+        TetrisBlock::new(6, 3),
+        TetrisBlock::new(7, 3),
+        TetrisBlock::new(8, 3),
+        TetrisBlock::new(9, 3),
+
+    ], l_generator);
+
+    run(|| {tetris_engine.tick()}, 20);
+
+    assert_eq!(tetris_engine.score(), 1200);
+}
