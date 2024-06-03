@@ -9,7 +9,7 @@ impl Square {
     pub fn new() -> Square {
         Square {
             block_group: BlockGroup {
-                blocks: vec![
+                blocks: [
                     TetrisBlock::new_with_color(4, 19, [0f32, 0f32, 1f32, 1f32]),
                     TetrisBlock::new_with_color(5, 19, [0f32, 0f32, 1f32, 1f32]),
                     TetrisBlock::new_with_color(4, 18, [0f32, 0f32, 1f32, 1f32]),
@@ -21,11 +21,7 @@ impl Square {
 }
 
 impl PlayableShape for Square {
-    fn block_group_mut(&mut self) -> &mut BlockGroup {
+    fn blocks(&mut self) -> &mut BlockGroup {
         &mut self.block_group
-    }
-
-    fn block_group(&self) -> &BlockGroup {
-        &self.block_group
     }
 }

@@ -13,7 +13,7 @@ impl L {
     pub fn new() -> L {
         L {
             block_group: BlockGroup {
-                blocks: vec![
+                blocks: [
                     TetrisBlock::new_with_color(4, 19, [1f32, 0f32, 0f32, 1f32]),
                     TetrisBlock::new_with_color(4, 18, [1f32, 0f32, 0f32, 1f32]),
                     TetrisBlock::new_with_color(4, 17, [1f32, 0f32, 0f32, 1f32]),
@@ -26,18 +26,14 @@ impl L {
 }
 
 impl PlayableShape for L {
-    fn block_group_mut(&mut self) -> &mut BlockGroup {
+    fn blocks(&mut self) -> &mut BlockGroup {
         &mut self.block_group
-    }
-
-    fn block_group(&self) -> &BlockGroup {
-        &self.block_group
     }
 
     fn rotate(&mut self) {
         let rotated_block = match self.rotation_position {
             N => {
-                vec![
+                [
                     self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 2, b.y - 1))).unwrap(),
                     self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y))).unwrap(),
                     self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x, b.y + 1))).unwrap(),
@@ -45,26 +41,28 @@ impl PlayableShape for L {
                 ]
             }
             E => {
-                vec![
+                [
                     self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 1, b.y - 2))).unwrap(),
                     self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x , b.y - 1))).unwrap(),
                     self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y))).unwrap(),
                     self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x, b.y + 1))).unwrap()
             ]}
             S => {
-                vec![
+                [
                     self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 2, b.y + 1))).unwrap(),
                     self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 1 , b.y))).unwrap(),
                     self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x , b.y - 1))).unwrap(),
                     self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y))).unwrap()
                 ]
             }
-            W => {vec![
-                self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y + 2))).unwrap(),
-                self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x , b.y + 1))).unwrap(),
-                self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 1 , b.y))).unwrap(),
-                self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x, b.y - 1))).unwrap()
-            ]}
+            W => {
+                [
+                    self.block_group.blocks.get(0).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x + 1, b.y + 2))).unwrap(),
+                    self.block_group.blocks.get(1).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x , b.y + 1))).unwrap(),
+                    self.block_group.blocks.get(2).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x - 1 , b.y))).unwrap(),
+                    self.block_group.blocks.get(3).and_then(|b| Some(TetrisBlock::from_with_new_position(&b, b.x, b.y - 1))).unwrap()
+                ]
+            }
         };
 
         if !rotated_block.iter().any(|b| b.x == 10 || b.x == -1){

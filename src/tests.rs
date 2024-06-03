@@ -19,7 +19,7 @@ fn square_generator() -> Box<dyn PlayableShape> {
 
 #[test]
 fn on_first_tick_a_single_square_is_put_into_play() {
-    let tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -303,7 +303,7 @@ fn drops_blocks_above_removed_row() {
 
 #[test]
 fn on_first_tick_a_single_tee_is_put_into_play() {
-    let tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -451,7 +451,7 @@ fn a_tee_can_be_rotated_near_the_border_on_the_right() {
 
 #[test]
 fn on_first_tick_a_single_l_is_put_into_play() {
-    let tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
