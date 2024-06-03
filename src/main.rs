@@ -1,3 +1,4 @@
+use std::ops::Add;
 use std::time::Duration;
 
 use blue_engine::KeyCode;
@@ -18,6 +19,8 @@ mod rotation_position;
 mod scoring;
 
 fn main() {
+    let title = "Rusty Tetris - Score: ";
+
     let rendering_engine = setup_engine();
 
     let mut tetris_engine = TetrisEngine::new();
@@ -25,7 +28,7 @@ fn main() {
     let mut frame_rate_limiter = SpeedLimiter::new(Duration::from_secs(1 / 60));
     let mut game_progress_limiter = SpeedLimiter::new(Duration::from_secs(1));
     rendering_engine
-        .update_loop(move |renderer, _window, objects, input, _camera, _plugins| {
+        .update_loop(move |renderer, window, objects, input, _camera, _plugins| {
             if input.key_pressed(KeyCode::ArrowLeft) {
                 tetris_engine.move_left();
                 render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
@@ -50,6 +53,8 @@ fn main() {
                 game_progress_limiter.tick(|| {
                     tetris_engine.tick();
                     render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
+                    let score_as_string = tetris_engine.score().to_string();
+                    window.set_title(format!("{title}{score_as_string}").as_str());
                 })
             })
         })
