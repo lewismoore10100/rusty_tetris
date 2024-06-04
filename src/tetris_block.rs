@@ -17,7 +17,11 @@ impl TetrisBlock {
     }
 
     pub fn from_with_new_position(existing: &TetrisBlock, x: i32, y: i32) -> TetrisBlock {
-        TetrisBlock { x, y, id: existing.id.clone(), color: existing.color}
+        TetrisBlock { x, y, id: existing.id.clone(), color: existing.color }
+    }
+
+    pub fn moved(&self, x_change: i32, y_change: i32) -> TetrisBlock {
+        TetrisBlock { x : self.x + x_change, y : self.y + y_change, id: self.id.clone(), color: self.color}
     }
 
     pub fn same_position(&self, other: &TetrisBlock) -> bool {
