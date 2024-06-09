@@ -6,12 +6,7 @@ pub struct BlockGroup {
 
 impl BlockGroup {
     fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        let new_positions = [
-            self.blocks[0].moved(0, -1),
-            self.blocks[1].moved(0, -1),
-            self.blocks[2].moved(0, -1),
-            self.blocks[3].moved(0, -1)
-        ];
+        let new_positions = self.all_moved(0, -1);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
             self.blocks = new_positions;
@@ -24,28 +19,27 @@ impl BlockGroup {
     }
 
     fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
-        let new_positions = [
-            self.blocks[0].moved(-1, 0),
-            self.blocks[1].moved(-1, 0),
-            self.blocks[2].moved(-1, 0),
-            self.blocks[3].moved(-1, 0)
-        ];
+        let new_positions = self.all_moved(-1, 0);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
             self.blocks = new_positions;
         }
     }
     fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
-        let new_positions = [
-            self.blocks[0].moved(1, 0),
-            self.blocks[1].moved(1, 0),
-            self.blocks[2].moved(1, 0),
-            self.blocks[3].moved(1, 0)
-        ];
+        let new_positions = self.all_moved(1, 0);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
             self.blocks = new_positions;
         }
+    }
+
+    fn all_moved(&self, x_change: i32, y_change: i32) -> [TetrisBlock; 4] {
+        [
+            self.blocks[0].moved(x_change, y_change),
+            self.blocks[1].moved(x_change, y_change),
+            self.blocks[2].moved(x_change, y_change),
+            self.blocks[3].moved(x_change, y_change)
+        ]
     }
 
     fn can_move(&self, other_blocks_in_scene: &[TetrisBlock], new_position: &[TetrisBlock]) -> bool {
