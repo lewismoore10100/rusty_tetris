@@ -1,4 +1,4 @@
-use std::thread::{sleep, Thread};
+use std::thread::{sleep};
 use std::time::{Duration, Instant};
 
 use blue_engine::{Engine, WindowDescriptor};
