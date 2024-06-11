@@ -12,9 +12,6 @@ mod tetris_block;
 mod render_blocks;
 mod tetris_engine;
 mod shapes;
-mod square;
-mod tee;
-mod l;
 mod rotation_position;
 mod scoring;
 

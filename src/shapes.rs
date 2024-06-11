@@ -1,5 +1,9 @@
 use crate::tetris_block::TetrisBlock;
 
+pub mod l;
+pub mod square;
+pub mod tee;
+
 pub struct BlockGroup {
     pub blocks: [TetrisBlock; 4]
 }

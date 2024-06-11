@@ -1,8 +1,7 @@
-use blue_engine::glm::equal;
-use crate::l::L;
+use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
-use crate::square::Square;
-use crate::tee::Tee;
+use crate::shapes::square::Square;
+use crate::shapes::tee::Tee;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;

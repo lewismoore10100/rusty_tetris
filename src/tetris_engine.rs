@@ -1,12 +1,11 @@
 extern crate rand;
 
 use rand::Rng;
-
-use crate::l::L;
 use crate::scoring::calculate_score;
+use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
-use crate::square::Square;
-use crate::tee::Tee;
+use crate::shapes::square::Square;
+use crate::shapes::tee::Tee;
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
