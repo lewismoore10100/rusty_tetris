@@ -3,6 +3,7 @@ use crate::tetris_block::TetrisBlock;
 pub mod l;
 pub mod square;
 pub mod t;
+pub mod s;
 
 pub struct BlockGroup {
     pub blocks: [TetrisBlock; 4]

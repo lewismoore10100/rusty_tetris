@@ -2,14 +2,18 @@ use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
+use crate::shapes::s::S;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;
 
+fn s_generator() -> Box<dyn PlayableShape> {
+    Box::new(S::new())
+}
 fn l_generator() -> Box<dyn PlayableShape> {
     Box::new(L::new())
 }
-fn tee_generator() -> Box<dyn PlayableShape> {
+fn t_generator() -> Box<dyn PlayableShape> {
     Box::new(T::new())
 }
 fn square_generator() -> Box<dyn PlayableShape> {
@@ -302,7 +306,7 @@ fn drops_blocks_above_removed_row() {
 
 #[test]
 fn on_first_tick_a_single_tee_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -316,7 +320,7 @@ fn on_first_tick_a_single_tee_is_put_into_play() {
 
 #[test]
 fn a_tee_can_be_rotated_90_degrees() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
 
@@ -334,7 +338,7 @@ fn a_tee_can_be_rotated_90_degrees() {
 
 #[test]
 fn a_tee_can_be_rotated_180_degrees() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
 
@@ -353,7 +357,7 @@ fn a_tee_can_be_rotated_180_degrees() {
 
 #[test]
 fn a_tee_can_be_rotated_270_degrees() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
 
@@ -372,7 +376,7 @@ fn a_tee_can_be_rotated_270_degrees() {
 
 #[test]
 fn a_tee_can_be_rotated_360_degrees() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
 
@@ -391,7 +395,7 @@ fn a_tee_can_be_rotated_360_degrees() {
 
 #[test]
 fn a_tee_can_not_be_rotated_out_of_bounds_on_the_right() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
     run(||{tetris_engine.rotate()},3);
@@ -411,7 +415,7 @@ fn a_tee_can_not_be_rotated_out_of_bounds_on_the_right() {
 
 #[test]
 fn a_tee_can_not_be_rotated_out_of_bounds_on_the_left() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
     run(||{tetris_engine.rotate()},1);
@@ -431,7 +435,7 @@ fn a_tee_can_not_be_rotated_out_of_bounds_on_the_left() {
 
 #[test]
 fn a_tee_can_be_rotated_near_the_border_on_the_right() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], tee_generator);
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
     run(||{tetris_engine.rotate()},2);
@@ -527,6 +531,20 @@ fn a_l_can_be_rotated_360_degrees() {
                           TetrisBlock::new(4, 17),
                           TetrisBlock::new(4, 16),
                           TetrisBlock::new(5, 16),
+                      ],
+    ))
+}
+
+#[test]
+fn on_first_tick_a_single_s_is_put_into_play() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], s_generator);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 19),
+                          TetrisBlock::new(5, 19),
+                          TetrisBlock::new(3, 18),
+                          TetrisBlock::new(4, 18),
                       ],
     ))
 }
