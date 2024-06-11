@@ -1,7 +1,7 @@
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
 use crate::shapes::square::Square;
-use crate::shapes::tee::Tee;
+use crate::shapes::t::T;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;
@@ -10,7 +10,7 @@ fn l_generator() -> Box<dyn PlayableShape> {
     Box::new(L::new())
 }
 fn tee_generator() -> Box<dyn PlayableShape> {
-    Box::new(Tee::new())
+    Box::new(T::new())
 }
 fn square_generator() -> Box<dyn PlayableShape> {
     Box::new(Square::new())

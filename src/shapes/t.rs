@@ -3,14 +3,14 @@ use crate::rotation_position::RotationPosition::{E, N, S, W};
 use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
-pub struct Tee {
+pub struct T {
     pub block_group: BlockGroup,
     pub rotation_position: RotationPosition,
 }
 
-impl Tee {
-    pub fn new() -> Tee {
-        Tee {
+impl T {
+    pub fn new() -> T {
+        T {
             block_group: BlockGroup {
                 blocks: [
                     TetrisBlock::new_with_color(5, 19, [0f32, 1f32, 0f32, 1f32]),
@@ -24,7 +24,7 @@ impl Tee {
     }
 }
 
-impl PlayableShape for Tee {
+impl PlayableShape for T {
     fn blocks(&mut self) -> &mut BlockGroup {
         &mut self.block_group
     }

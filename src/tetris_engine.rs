@@ -5,7 +5,7 @@ use crate::scoring::calculate_score;
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
 use crate::shapes::square::Square;
-use crate::shapes::tee::Tee;
+use crate::shapes::t::T;
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
@@ -21,7 +21,7 @@ fn random_shape_generator() -> Box<dyn PlayableShape>{
 
     match random_number {
         0 => Box::new(Square::new()),
-        1 => Box::new(Tee::new()),
+        1 => Box::new(T::new()),
         2 => Box::new(L::new()),
         _ => Box::new(Square::new())
     }
