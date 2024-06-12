@@ -25,6 +25,22 @@ impl S {
 }
 
 impl PlayableShape for S {
+
+    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
+        let new_position = self.blocks().move_down(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
+    }
+    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
+        let new_position = self.blocks().move_left(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
+    }
+    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
+        let new_position = self.blocks().move_right(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
+    }
     fn blocks(&mut self) -> &mut BlockGroup {
         &mut self.block_group
     }
