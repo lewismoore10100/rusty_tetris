@@ -57,7 +57,7 @@ impl TetrisEngine {
 
     pub fn tick(&mut self) {
         if self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()).is_err() {
-            self.current_shape.blocks().blocks.iter().for_each(|b| {
+            self.current_shape.blocks().iter().for_each(|b| {
                 let new_b = b.clone();
                 self.merged_blocks.push(new_b);
             });
@@ -111,8 +111,8 @@ impl TetrisEngine {
     }
 
     pub fn blocks_for_rendering(&mut self) -> Vec<&TetrisBlock> {
-        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().blocks.len() + self.merged_blocks.len());
-        self.current_shape.blocks().blocks.iter().for_each(|b| all_blocks.push(b));
+        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
+        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b));
         self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
         all_blocks
     }

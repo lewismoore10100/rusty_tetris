@@ -80,7 +80,7 @@ impl PlayableShape for L {
         }
     }
 
-    fn blocks(&self) -> &BlockGroup {
-        &self.block_group
+    fn blocks(&self) -> &[TetrisBlock; 4] {
+        &self.block_group.blocks
     }
 }
