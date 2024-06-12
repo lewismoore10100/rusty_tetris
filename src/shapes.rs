@@ -10,12 +10,11 @@ pub struct BlockGroup {
 }
 
 impl BlockGroup {
-    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
+    fn move_down(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
         let new_positions = self.all_moved(0, -1);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
-            self.blocks = new_positions;
-            Ok(())
+            Ok(BlockGroup { blocks: new_positions})
         }
         else
         {
@@ -23,18 +22,24 @@ impl BlockGroup {
         }
     }
 
-    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
+    fn move_left(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
         let new_positions = self.all_moved(-1, 0);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
-            self.blocks = new_positions;
+            Ok(BlockGroup { blocks: new_positions})
+        }
+        else {
+            Err(())
         }
     }
-    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
+    fn move_right(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
         let new_positions = self.all_moved(1, 0);
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
-            self.blocks = new_positions;
+            Ok(BlockGroup { blocks: new_positions})
+        }
+        else {
+            Err(())
         }
     }
 
@@ -71,15 +76,22 @@ impl BlockGroup {
 }
 
 pub trait PlayableShape {
-    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        self.blocks().move_down(other_blocks_in_scene)
+    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
+        let new_position = self.blocks().move_down(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
     }
-    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
-        self.blocks().move_left(other_blocks_in_scene)
+    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
+        let new_position = self.blocks().move_left(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
     }
-    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) {
-        self.blocks().move_right(other_blocks_in_scene)
+    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
+        let new_position = self.blocks().move_right(other_blocks_in_scene)?;
+        self.set_blocks(new_position);
+        Ok(())
     }
     fn blocks(&mut self) -> &mut BlockGroup;
+    fn set_blocks(&mut self, blocks: BlockGroup);
     fn rotate(&mut self){}
 }

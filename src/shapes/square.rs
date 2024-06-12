@@ -24,4 +24,8 @@ impl PlayableShape for Square {
     fn blocks(&mut self) -> &mut BlockGroup {
         &mut self.block_group
     }
+
+    fn set_blocks(&mut self, blocks: BlockGroup) {
+        self.block_group = blocks;
+    }
 }

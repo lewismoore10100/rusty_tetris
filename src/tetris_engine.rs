@@ -64,11 +64,11 @@ impl TetrisEngine {
     }
 
     pub fn move_left(&mut self) {
-        self.current_shape.move_left(self.merged_blocks.as_slice());
+        let _ = self.current_shape.move_left(self.merged_blocks.as_slice());
     }
 
     pub fn move_right(&mut self) {
-        self.current_shape.move_right(self.merged_blocks.as_slice());
+        let _ = self.current_shape.move_right(self.merged_blocks.as_slice());
     }
 
     pub fn drop(&mut self) {

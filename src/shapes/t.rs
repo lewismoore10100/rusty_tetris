@@ -29,6 +29,10 @@ impl PlayableShape for T {
         &mut self.block_group
     }
 
+    fn set_blocks(&mut self, blocks: BlockGroup) {
+        self.block_group = blocks;
+    }
+
     fn rotate(&mut self) {
         let rotated_block = match self.rotation_position {
             N => {
