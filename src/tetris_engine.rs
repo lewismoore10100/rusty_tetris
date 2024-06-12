@@ -1,6 +1,9 @@
 extern crate rand;
 
 use rand::Rng;
+use Direction::RIGHT;
+use crate::direction::Direction;
+use crate::direction::Direction::{DOWN, LEFT};
 use crate::scoring::calculate_score;
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
@@ -53,7 +56,7 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        if self.current_shape.move_down(self.merged_blocks.as_slice()).is_err() {
+        if self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()).is_err() {
             self.current_shape.blocks().blocks.iter().for_each(|b| {
                 let new_b = b.clone();
                 self.merged_blocks.push(new_b);
@@ -64,16 +67,16 @@ impl TetrisEngine {
     }
 
     pub fn move_left(&mut self) {
-        let _ = self.current_shape.move_left(self.merged_blocks.as_slice());
+        let _ = self.current_shape.move_direction(LEFT, self.merged_blocks.as_slice());
     }
 
     pub fn move_right(&mut self) {
-        let _ = self.current_shape.move_right(self.merged_blocks.as_slice());
+        let _ = self.current_shape.move_direction(RIGHT, self.merged_blocks.as_slice());
     }
 
     pub fn drop(&mut self) {
         loop {
-            if self.current_shape.move_down(self.merged_blocks.as_slice()).is_err() {
+            if self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()).is_err() {
                 self.tick();
                 break;
             }

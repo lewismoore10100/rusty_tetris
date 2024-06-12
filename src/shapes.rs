@@ -1,4 +1,5 @@
 use crate::tetris_block::TetrisBlock;
+use crate::direction::Direction;
 
 pub mod l;
 pub mod square;
@@ -10,8 +11,13 @@ pub struct BlockGroup {
 }
 
 impl BlockGroup {
-    fn move_down(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
-        let new_positions = self.all_moved(0, -1);
+
+    fn move_direction(&self, direction: Direction, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
+        let new_positions = match direction {
+            Direction::RIGHT => {self.all_moved(1, 0)}
+            Direction::LEFT => {self.all_moved(-1, 0)}
+            Direction::DOWN => {self.all_moved(0, -1)}
+        };
 
         if self.can_move(other_blocks_in_scene, &new_positions) {
             Ok(BlockGroup { blocks: new_positions})
@@ -20,29 +26,8 @@ impl BlockGroup {
         {
             Err(())
         }
+
     }
-
-    fn move_left(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
-        let new_positions = self.all_moved(-1, 0);
-
-        if self.can_move(other_blocks_in_scene, &new_positions) {
-            Ok(BlockGroup { blocks: new_positions})
-        }
-        else {
-            Err(())
-        }
-    }
-    fn move_right(&self, other_blocks_in_scene: &[TetrisBlock]) -> Result<BlockGroup,()> {
-        let new_positions = self.all_moved(1, 0);
-
-        if self.can_move(other_blocks_in_scene, &new_positions) {
-            Ok(BlockGroup { blocks: new_positions})
-        }
-        else {
-            Err(())
-        }
-    }
-
     fn all_moved(&self, x_change: i32, y_change: i32) -> [TetrisBlock; 4] {
         [
             self.blocks[0].moved(x_change, y_change),
@@ -76,9 +61,7 @@ impl BlockGroup {
 }
 
 pub trait PlayableShape {
-    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()>;
-    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()>;
-    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()>;
+    fn move_direction(&mut self, direction: Direction, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()>;
     fn rotate(&mut self);
     fn blocks(&self) -> &BlockGroup;
 }

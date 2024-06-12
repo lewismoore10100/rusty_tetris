@@ -13,6 +13,7 @@ mod render_blocks;
 mod tetris_engine;
 mod shapes;
 mod rotation_position;
+mod direction;
 mod scoring;
 
 fn main() {

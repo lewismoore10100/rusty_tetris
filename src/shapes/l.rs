@@ -1,4 +1,5 @@
 use RotationPosition::{E, S, W};
+use crate::direction::Direction;
 use crate::rotation_position::RotationPosition;
 use crate::rotation_position::RotationPosition::N;
 use crate::shapes::{BlockGroup, PlayableShape};
@@ -27,18 +28,8 @@ impl L {
 
 impl PlayableShape for L {
 
-    fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
-        let new_position = self.block_group.move_down(other_blocks_in_scene)?;
-        self.block_group = new_position;
-        Ok(())
-    }
-    fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        let new_position = self.block_group.move_left(other_blocks_in_scene)?;
-        self.block_group = new_position;
-        Ok(())
-    }
-    fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        let new_position = self.block_group.move_right(other_blocks_in_scene)?;
+    fn move_direction(&mut self, direction: Direction, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
+        let new_position = self.block_group.move_direction(direction, other_blocks_in_scene)?;
         self.block_group = new_position;
         Ok(())
     }
