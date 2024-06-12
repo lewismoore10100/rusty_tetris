@@ -28,27 +28,19 @@ impl L {
 impl PlayableShape for L {
 
     fn move_down(&mut self, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
-        let new_position = self.blocks().move_down(other_blocks_in_scene)?;
-        self.set_blocks(new_position);
+        let new_position = self.block_group.move_down(other_blocks_in_scene)?;
+        self.block_group = new_position;
         Ok(())
     }
     fn move_left(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        let new_position = self.blocks().move_left(other_blocks_in_scene)?;
-        self.set_blocks(new_position);
+        let new_position = self.block_group.move_left(other_blocks_in_scene)?;
+        self.block_group = new_position;
         Ok(())
     }
     fn move_right(&mut self, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()> {
-        let new_position = self.blocks().move_right(other_blocks_in_scene)?;
-        self.set_blocks(new_position);
+        let new_position = self.block_group.move_right(other_blocks_in_scene)?;
+        self.block_group = new_position;
         Ok(())
-    }
-
-    fn blocks(&mut self) -> &mut BlockGroup {
-        &mut self.block_group
-    }
-
-    fn set_blocks(&mut self, blocks: BlockGroup) {
-        self.block_group = blocks;
     }
 
     fn rotate(&mut self) {
@@ -95,5 +87,9 @@ impl PlayableShape for L {
                 W => {N}
             }
         }
+    }
+
+    fn blocks(&self) -> &BlockGroup {
+        &self.block_group
     }
 }
