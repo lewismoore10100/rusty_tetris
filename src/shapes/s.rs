@@ -32,4 +32,7 @@ impl PlayableShape for S {
     fn set_blocks(&mut self, blocks: BlockGroup) {
         self.block_group = blocks;
     }
+
+    fn rotate(&mut self) {
+    }
 }

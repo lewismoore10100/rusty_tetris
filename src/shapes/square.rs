@@ -28,4 +28,7 @@ impl PlayableShape for Square {
     fn set_blocks(&mut self, blocks: BlockGroup) {
         self.block_group = blocks;
     }
+
+    fn rotate(&mut self) {
+    }
 }
