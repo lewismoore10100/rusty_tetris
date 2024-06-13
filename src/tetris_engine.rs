@@ -56,41 +56,72 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        match self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()) {
-            Ok(new_shape) => {self.current_shape = new_shape}
-            Err(_) => {
-                self.current_shape.blocks().iter().for_each(|b| {
-                    let new_b = b.clone();
-                    self.merged_blocks.push(new_b);
-                });
-                self.remove_completed_rows();
-                self.current_shape = (self.generate_next_shape)()
-            }
+        let new_position = self.current_shape.move_direction(DOWN);
+
+        if !self.can_move(new_position.blocks()) {
+            self.current_shape.blocks().iter().for_each(|b| {
+                let new_b = b.clone();
+                self.merged_blocks.push(new_b);
+            });
+            self.remove_completed_rows();
+            self.current_shape = (self.generate_next_shape)()
+        }
+        else {
+            self.current_shape = new_position;
         }
     }
 
     pub fn move_left(&mut self) {
-        if let Ok(new_shape) =  self.current_shape.move_direction(LEFT, self.merged_blocks.as_slice()) {
-            self.current_shape = new_shape;
+        let new_position = self.current_shape.move_direction(LEFT);
+
+        if self.can_move(new_position.blocks()){
+            self.current_shape = new_position;
         }
     }
 
     pub fn move_right(&mut self) {
-        if let Ok(new_shape) =  self.current_shape.move_direction(RIGHT, self.merged_blocks.as_slice()) {
-            self.current_shape = new_shape;
+        let new_position = self.current_shape.move_direction(RIGHT);
+
+        if self.can_move(new_position.blocks()){
+            self.current_shape = new_position;
         }
     }
 
     pub fn drop(&mut self) {
         loop {
-            match self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()) {
-                Ok(new_shape) => { self.current_shape = new_shape }
-                Err(_) => {
-                    self.tick();
-                    break;
+            let new_position = self.current_shape.move_direction(DOWN);
+
+            if self.can_move(new_position.blocks()){
+                self.current_shape = new_position;
+            }
+            else
+            {
+                self.tick();
+                break;
+            }
+        }
+    }
+
+    fn can_move(&self, new_position: &[TetrisBlock]) -> bool {
+        for current_block_to_move in new_position {
+            if current_block_to_move.y == -1 {
+                return false;
+            }
+            if current_block_to_move.x == -1 {
+                return false;
+            }
+            if current_block_to_move.x == 10 {
+                return false;
+            }
+
+            for block_in_scene in &self.merged_blocks {
+                if current_block_to_move.x == block_in_scene.x &&
+                    current_block_to_move.y == block_in_scene.y {
+                    return false;
                 }
             }
         }
+        true
     }
 
     pub fn rotate(&mut self) {

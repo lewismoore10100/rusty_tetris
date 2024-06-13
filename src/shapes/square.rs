@@ -24,9 +24,9 @@ impl Square {
 
 impl PlayableShape for Square {
 
-    fn move_direction(&self, direction: Direction, other_blocks_in_scene: &[TetrisBlock])-> Result<Box<dyn PlayableShape>,()> {
-        let new_position = self.block_group.move_direction(direction, other_blocks_in_scene)?;
-        Ok(Box::new(Square{ block_group: new_position}))
+    fn move_direction(&self, direction: Direction)-> Box<dyn PlayableShape> {
+        let new_position = self.block_group.move_direction(direction);
+        Box::new(Square{ block_group: new_position})
     }
 
     fn rotate(&self) -> Box<dyn PlayableShape> {
