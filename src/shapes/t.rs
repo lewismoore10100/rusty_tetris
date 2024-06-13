@@ -73,12 +73,8 @@ impl PlayableShape for T {
             block_group: BlockGroup {
                 blocks: rotated_block
             },
-            rotation_position: match self.rotation_position {
-                N => {E}
-                E => {S}
-                S => {W}
-                W => {N}
-            }})
+            rotation_position: self.rotation_position.next_position()
+        })
     }
 
     fn blocks(&self) -> &[TetrisBlock; 4] {

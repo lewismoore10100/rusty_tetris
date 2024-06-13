@@ -40,7 +40,7 @@ impl PlayableShape for L {
                 [
                     self.block_group.blocks[0].moved(2, -1),
                     self.block_group.blocks[1].moved(1, 0),
-                    self.block_group.blocks[2].moved(0,1),
+                    self.block_group.blocks[2].moved(0, 1),
                     self.block_group.blocks[3].moved(-1, 0)
                 ]
             }
@@ -50,7 +50,8 @@ impl PlayableShape for L {
                     self.block_group.blocks[1].moved(0, -1),
                     self.block_group.blocks[2].moved(1, 0),
                     self.block_group.blocks[3].moved(0, 1),
-            ]}
+                ]
+            }
             S => {
                 [
                     self.block_group.blocks[0].moved(-2, 1),
@@ -63,7 +64,7 @@ impl PlayableShape for L {
                 [
                     self.block_group.blocks[0].moved(1, 2),
                     self.block_group.blocks[1].moved(0, 1),
-                    self.block_group.blocks[2].moved(-1 , 0),
+                    self.block_group.blocks[2].moved(-1, 0),
                     self.block_group.blocks[3].moved(0, -1)
                 ]
             }
@@ -73,12 +74,8 @@ impl PlayableShape for L {
             block_group: BlockGroup {
                 blocks: rotated_block
             },
-            rotation_position: match self.rotation_position {
-                N => {E}
-                E => {S}
-                S => {W}
-                W => {N}
-            }})
+            rotation_position: self.rotation_position.next_position()
+        })
     }
 
     fn blocks(&self) -> &[TetrisBlock; 4] {
