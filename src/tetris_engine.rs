@@ -112,7 +112,7 @@ impl TetrisEngine {
     pub fn rotate(&mut self) {
         let new_position = self.current_shape.rotate();
 
-        if !new_position.blocks().iter().any(|b| b.x == 10 || b.x == -1){
+        if self.can_move(new_position.blocks()){
             self.current_shape = new_position;
         }
     }
