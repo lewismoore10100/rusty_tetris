@@ -2,9 +2,9 @@ use crate::direction::Direction;
 use crate::rotation_position::RotationPosition;
 use crate::rotation_position::RotationPosition::N;
 use crate::shapes::{BlockGroup, PlayableShape};
-use crate::shapes::l::L;
 use crate::tetris_block::TetrisBlock;
 
+#[derive(Clone)]
 pub struct S {
     pub block_group: BlockGroup,
     pub rotation_position: RotationPosition,
@@ -33,7 +33,8 @@ impl PlayableShape for S {
         Ok(Box::new(S{ block_group: new_position, rotation_position: self.rotation_position.clone()}))
     }
 
-    fn rotate(&mut self) {
+    fn rotate(&self) -> Box<dyn PlayableShape> {
+        Box::new(self.clone())
     }
 
     fn blocks(&self) -> &[TetrisBlock; 4] {

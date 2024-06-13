@@ -6,6 +6,7 @@ pub mod square;
 pub mod t;
 pub mod s;
 
+#[derive(Clone)]
 pub struct BlockGroup {
     pub blocks: [TetrisBlock; 4]
 }
@@ -62,6 +63,6 @@ impl BlockGroup {
 
 pub trait PlayableShape {
     fn move_direction(&self, direction: Direction, other_blocks_in_scene: &[TetrisBlock]) -> Result<Box<dyn PlayableShape>,()>;
-    fn rotate(&mut self);
+    fn rotate(&self) -> Box<dyn PlayableShape>;
     fn blocks(&self) -> &[TetrisBlock; 4];
 }

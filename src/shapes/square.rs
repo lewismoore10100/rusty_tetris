@@ -1,8 +1,8 @@
 use crate::direction::Direction;
 use crate::shapes::{BlockGroup, PlayableShape};
-use crate::shapes::l::L;
 use crate::tetris_block::TetrisBlock;
 
+#[derive(Clone)]
 pub struct Square {
     pub block_group: BlockGroup,
 }
@@ -29,7 +29,8 @@ impl PlayableShape for Square {
         Ok(Box::new(Square{ block_group: new_position}))
     }
 
-    fn rotate(&mut self) {
+    fn rotate(&self) -> Box<dyn PlayableShape> {
+        Box::new(self.clone())
     }
 
     fn blocks(&self) -> &[TetrisBlock; 4] {

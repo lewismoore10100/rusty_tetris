@@ -33,7 +33,7 @@ impl PlayableShape for L {
         Ok(Box::new(L{ block_group: new_position, rotation_position: self.rotation_position.clone()}))
     }
 
-    fn rotate(&mut self) {
+    fn rotate(&self) -> Box<dyn PlayableShape> {
         let rotated_block = match self.rotation_position {
             N => {
                 [
@@ -68,15 +68,16 @@ impl PlayableShape for L {
             }
         };
 
-        if !rotated_block.iter().any(|b| b.x == 10 || b.x == -1){
-            self.block_group = BlockGroup{blocks: rotated_block};
-            self.rotation_position = match self.rotation_position {
+        Box::new(L {
+            block_group: BlockGroup {
+                blocks: rotated_block
+            },
+            rotation_position: match self.rotation_position {
                 N => {E}
                 E => {S}
                 S => {W}
                 W => {N}
-            }
-        }
+            }})
     }
 
     fn blocks(&self) -> &[TetrisBlock; 4] {

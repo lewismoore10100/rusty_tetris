@@ -6,7 +6,7 @@ use crate::direction::Direction;
 use crate::direction::Direction::{DOWN, LEFT};
 use crate::scoring::calculate_score;
 use crate::shapes::l::L;
-use crate::shapes::PlayableShape;
+use crate::shapes::{PlayableShape};
 use crate::shapes::s::S;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
@@ -94,7 +94,11 @@ impl TetrisEngine {
     }
 
     pub fn rotate(&mut self) {
-        self.current_shape.rotate();
+        let new_position = self.current_shape.rotate();
+
+        if !new_position.blocks().iter().any(|b| b.x == 10 || b.x == -1){
+            self.current_shape = new_position;
+        }
     }
 
     fn remove_completed_rows(&mut self) {
