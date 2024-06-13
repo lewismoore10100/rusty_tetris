@@ -119,19 +119,14 @@ impl TetrisEngine {
 
     fn can_move(&self, new_position: &[TetrisBlock]) -> bool {
         for current_block_to_move in new_position {
-            if current_block_to_move.y == -1 {
-                return false;
-            }
-            if current_block_to_move.x == -1 {
-                return false;
-            }
-            if current_block_to_move.x == 10 {
+            let TetrisBlock { x, y, .. } = current_block_to_move;
+
+            if *y == -1 || *x == -1 || *x == 10 {
                 return false;
             }
 
             for block_in_scene in &self.merged_blocks {
-                if current_block_to_move.x == block_in_scene.x &&
-                    current_block_to_move.y == block_in_scene.y {
+                if *x == block_in_scene.x && *y == block_in_scene.y {
                     return false;
                 }
             }
