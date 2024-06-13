@@ -102,6 +102,21 @@ impl TetrisEngine {
         }
     }
 
+    pub fn blocks_for_rendering(&mut self) -> Vec<&TetrisBlock> {
+        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
+        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b));
+        self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
+        all_blocks
+    }
+
+    pub fn rotate(&mut self) {
+        let new_position = self.current_shape.rotate();
+
+        if !new_position.blocks().iter().any(|b| b.x == 10 || b.x == -1){
+            self.current_shape = new_position;
+        }
+    }
+
     fn can_move(&self, new_position: &[TetrisBlock]) -> bool {
         for current_block_to_move in new_position {
             if current_block_to_move.y == -1 {
@@ -122,14 +137,6 @@ impl TetrisEngine {
             }
         }
         true
-    }
-
-    pub fn rotate(&mut self) {
-        let new_position = self.current_shape.rotate();
-
-        if !new_position.blocks().iter().any(|b| b.x == 10 || b.x == -1){
-            self.current_shape = new_position;
-        }
     }
 
     fn remove_completed_rows(&mut self) {
@@ -155,11 +162,6 @@ impl TetrisEngine {
         }
     }
 
-    pub fn blocks_for_rendering(&mut self) -> Vec<&TetrisBlock> {
-        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
-        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b));
-        self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
-        all_blocks
-    }
+
 }
 
