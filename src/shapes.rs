@@ -61,7 +61,7 @@ impl BlockGroup {
 }
 
 pub trait PlayableShape {
-    fn move_direction(&mut self, direction: Direction, other_blocks_in_scene: &[TetrisBlock]) -> Result<(),()>;
+    fn move_direction(&self, direction: Direction, other_blocks_in_scene: &[TetrisBlock]) -> Result<Box<dyn PlayableShape>,()>;
     fn rotate(&mut self);
     fn blocks(&self) -> &[TetrisBlock; 4];
 }

@@ -28,10 +28,9 @@ impl L {
 
 impl PlayableShape for L {
 
-    fn move_direction(&mut self, direction: Direction, other_blocks_in_scene: &[TetrisBlock])-> Result<(),()> {
+    fn move_direction(&self, direction: Direction, other_blocks_in_scene: &[TetrisBlock])-> Result<Box<dyn PlayableShape>,()> {
         let new_position = self.block_group.move_direction(direction, other_blocks_in_scene)?;
-        self.block_group = new_position;
-        Ok(())
+        Ok(Box::new(L{ block_group: new_position, rotation_position: self.rotation_position.clone()}))
     }
 
     fn rotate(&mut self) {

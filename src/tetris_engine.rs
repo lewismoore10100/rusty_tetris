@@ -56,29 +56,39 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        if self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()).is_err() {
-            self.current_shape.blocks().iter().for_each(|b| {
-                let new_b = b.clone();
-                self.merged_blocks.push(new_b);
-            });
-            self.remove_completed_rows();
-            self.current_shape = (self.generate_next_shape)()
+        match self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()) {
+            Ok(new_shape) => {self.current_shape = new_shape}
+            Err(_) => {
+                self.current_shape.blocks().iter().for_each(|b| {
+                    let new_b = b.clone();
+                    self.merged_blocks.push(new_b);
+                });
+                self.remove_completed_rows();
+                self.current_shape = (self.generate_next_shape)()
+            }
         }
     }
 
     pub fn move_left(&mut self) {
-        let _ = self.current_shape.move_direction(LEFT, self.merged_blocks.as_slice());
+        if let Ok(new_shape) =  self.current_shape.move_direction(LEFT, self.merged_blocks.as_slice()) {
+            self.current_shape = new_shape;
+        }
     }
 
     pub fn move_right(&mut self) {
-        let _ = self.current_shape.move_direction(RIGHT, self.merged_blocks.as_slice());
+        if let Ok(new_shape) =  self.current_shape.move_direction(RIGHT, self.merged_blocks.as_slice()) {
+            self.current_shape = new_shape;
+        }
     }
 
     pub fn drop(&mut self) {
         loop {
-            if self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()).is_err() {
-                self.tick();
-                break;
+            match self.current_shape.move_direction(DOWN, self.merged_blocks.as_slice()) {
+                Ok(new_shape) => { self.current_shape = new_shape }
+                Err(_) => {
+                    self.tick();
+                    break;
+                }
             }
         }
     }
