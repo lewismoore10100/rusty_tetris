@@ -58,16 +58,16 @@ impl TetrisEngine {
     pub fn tick(&mut self) {
         let new_position = self.current_shape.move_direction(DOWN);
 
-        if !self.can_move(new_position.blocks()) {
+        if self.can_move(new_position.blocks()) {
+            self.current_shape = new_position;
+        }
+        else {
             self.current_shape.blocks().iter().for_each(|b| {
                 let new_b = b.clone();
                 self.merged_blocks.push(new_b);
             });
             self.remove_completed_rows();
             self.current_shape = (self.generate_next_shape)()
-        }
-        else {
-            self.current_shape = new_position;
         }
     }
 
