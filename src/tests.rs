@@ -1,8 +1,8 @@
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
+use crate::shapes::s::S;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
-use crate::shapes::s::S;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;
@@ -10,12 +10,15 @@ use crate::tetris_engine::TetrisEngine;
 fn s_generator() -> Box<dyn PlayableShape> {
     Box::new(S::new())
 }
+
 fn l_generator() -> Box<dyn PlayableShape> {
     Box::new(L::new())
 }
+
 fn t_generator() -> Box<dyn PlayableShape> {
     Box::new(T::new())
 }
+
 fn square_generator() -> Box<dyn PlayableShape> {
     Box::new(Square::new())
 }
@@ -342,7 +345,7 @@ fn a_tee_can_be_rotated_180_degrees() {
 
     tetris_engine.tick();
 
-    run(||{tetris_engine.rotate()},2);
+    run(|| { tetris_engine.rotate() }, 2);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -361,7 +364,7 @@ fn a_tee_can_be_rotated_270_degrees() {
 
     tetris_engine.tick();
 
-    run(||{tetris_engine.rotate()},3);
+    run(|| { tetris_engine.rotate() }, 3);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -380,7 +383,7 @@ fn a_tee_can_be_rotated_360_degrees() {
 
     tetris_engine.tick();
 
-    run(||{tetris_engine.rotate()},4);
+    run(|| { tetris_engine.rotate() }, 4);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -398,9 +401,9 @@ fn a_tee_can_not_be_rotated_out_of_bounds_on_the_right() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
-    run(||{tetris_engine.rotate()},3);
-    run(||{tetris_engine.move_right()},4);
-    run(||{tetris_engine.rotate()},3);
+    run(|| { tetris_engine.rotate() }, 3);
+    run(|| { tetris_engine.move_right() }, 4);
+    run(|| { tetris_engine.rotate() }, 3);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -418,9 +421,9 @@ fn a_tee_can_not_be_rotated_out_of_bounds_on_the_left() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
-    run(||{tetris_engine.rotate()},1);
-    run(||{tetris_engine.move_left()},5);
-    run(||{tetris_engine.rotate()},1);
+    run(|| { tetris_engine.rotate() }, 1);
+    run(|| { tetris_engine.move_left() }, 5);
+    run(|| { tetris_engine.rotate() }, 1);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -438,9 +441,9 @@ fn a_tee_can_be_rotated_near_the_border_on_the_right() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     tetris_engine.tick();
-    run(||{tetris_engine.rotate()},2);
-    run(||{tetris_engine.move_right()},5);
-    run(||{tetris_engine.rotate()},1);
+    run(|| { tetris_engine.rotate() }, 2);
+    run(|| { tetris_engine.move_right() }, 5);
+    run(|| { tetris_engine.rotate() }, 1);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -448,7 +451,7 @@ fn a_tee_can_be_rotated_near_the_border_on_the_right() {
                           TetrisBlock::new(8, 18),
                           TetrisBlock::new(8, 17),
                           TetrisBlock::new(8, 16),
-                      ]
+                      ],
     ))
 }
 
@@ -488,7 +491,7 @@ fn a_l_can_be_rotated_180_degrees() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
 
     tetris_engine.tick();
-    run(|| {tetris_engine.rotate()}, 2);
+    run(|| { tetris_engine.rotate() }, 2);
 
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
@@ -506,7 +509,7 @@ fn a_l_can_be_rotated_270_degrees() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
 
     tetris_engine.tick();
-    run(|| {tetris_engine.rotate()}, 3);
+    run(|| { tetris_engine.rotate() }, 3);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -523,7 +526,7 @@ fn a_l_can_be_rotated_360_degrees() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
 
     tetris_engine.tick();
-    run(|| {tetris_engine.rotate()}, 4);
+    run(|| { tetris_engine.rotate() }, 4);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -564,7 +567,7 @@ fn completing_a_single_row_scores_40_points() {
         TetrisBlock::new(9, 0),
     ], l_generator);
 
-    run(|| {tetris_engine.tick()}, 20);
+    run(|| { tetris_engine.tick() }, 20);
 
     assert_eq!(tetris_engine.score(), 40);
 }
@@ -582,7 +585,6 @@ fn completing_a_double_row_scores_100_points() {
         TetrisBlock::new(7, 0),
         TetrisBlock::new(8, 0),
         TetrisBlock::new(9, 0),
-
         TetrisBlock::new(0, 1),
         TetrisBlock::new(1, 1),
         TetrisBlock::new(2, 1),
@@ -593,10 +595,9 @@ fn completing_a_double_row_scores_100_points() {
         TetrisBlock::new(7, 1),
         TetrisBlock::new(8, 1),
         TetrisBlock::new(9, 1),
-
     ], l_generator);
 
-    run(|| {tetris_engine.tick()}, 20);
+    run(|| { tetris_engine.tick() }, 20);
 
     assert_eq!(tetris_engine.score(), 100);
 }
@@ -613,7 +614,6 @@ fn completing_a_triple_row_scores_300_points() {
         TetrisBlock::new(7, 0),
         TetrisBlock::new(8, 0),
         TetrisBlock::new(9, 0),
-
         TetrisBlock::new(0, 1),
         TetrisBlock::new(1, 1),
         TetrisBlock::new(2, 1),
@@ -624,7 +624,6 @@ fn completing_a_triple_row_scores_300_points() {
         TetrisBlock::new(7, 1),
         TetrisBlock::new(8, 1),
         TetrisBlock::new(9, 1),
-
         TetrisBlock::new(0, 2),
         TetrisBlock::new(1, 2),
         TetrisBlock::new(2, 2),
@@ -635,10 +634,9 @@ fn completing_a_triple_row_scores_300_points() {
         TetrisBlock::new(7, 2),
         TetrisBlock::new(8, 2),
         TetrisBlock::new(9, 2),
-
     ], l_generator);
 
-    run(|| {tetris_engine.tick()}, 20);
+    run(|| { tetris_engine.tick() }, 20);
 
     assert_eq!(tetris_engine.score(), 300);
 }
@@ -655,7 +653,6 @@ fn completing_a_triple_row_scores_1200_points() {
         TetrisBlock::new(7, 0),
         TetrisBlock::new(8, 0),
         TetrisBlock::new(9, 0),
-
         TetrisBlock::new(0, 1),
         TetrisBlock::new(1, 1),
         TetrisBlock::new(2, 1),
@@ -666,7 +663,6 @@ fn completing_a_triple_row_scores_1200_points() {
         TetrisBlock::new(7, 1),
         TetrisBlock::new(8, 1),
         TetrisBlock::new(9, 1),
-
         TetrisBlock::new(0, 2),
         TetrisBlock::new(1, 2),
         TetrisBlock::new(2, 2),
@@ -677,7 +673,6 @@ fn completing_a_triple_row_scores_1200_points() {
         TetrisBlock::new(7, 2),
         TetrisBlock::new(8, 2),
         TetrisBlock::new(9, 2),
-
         TetrisBlock::new(0, 3),
         TetrisBlock::new(1, 3),
         TetrisBlock::new(2, 3),
@@ -688,10 +683,9 @@ fn completing_a_triple_row_scores_1200_points() {
         TetrisBlock::new(7, 3),
         TetrisBlock::new(8, 3),
         TetrisBlock::new(9, 3),
-
     ], l_generator);
 
-    run(|| {tetris_engine.tick()}, 20);
+    run(|| { tetris_engine.tick() }, 20);
 
     assert_eq!(tetris_engine.score(), 1200);
 }

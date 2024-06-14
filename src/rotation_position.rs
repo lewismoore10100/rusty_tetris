@@ -11,10 +11,10 @@ pub enum RotationPosition {
 impl RotationPosition {
     pub fn next_position(&self) -> RotationPosition {
         match self {
-            N => {E}
-            E => {S}
-            S => {W}
-            W => {N}
+            N => { E }
+            E => { S }
+            S => { W }
+            W => { N }
         }
     }
 }

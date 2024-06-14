@@ -23,10 +23,9 @@ impl Square {
 }
 
 impl PlayableShape for Square {
-
-    fn move_direction(&self, direction: Direction)-> Box<dyn PlayableShape> {
+    fn move_direction(&self, direction: Direction) -> Box<dyn PlayableShape> {
         let new_position = self.block_group.move_direction(direction);
-        Box::new(Square{ block_group: new_position})
+        Box::new(Square { block_group: new_position })
     }
 
     fn rotate(&self) -> Box<dyn PlayableShape> {

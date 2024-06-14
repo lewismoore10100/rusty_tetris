@@ -1,4 +1,4 @@
-use std::thread::{sleep};
+use std::thread::sleep;
 use std::time::{Duration, Instant};
 
 use blue_engine::{Engine, WindowDescriptor};
@@ -6,7 +6,7 @@ use blue_engine::{Engine, WindowDescriptor};
 pub struct SpeedLimiter {
     duration_between_action: Duration,
     last_time: Instant,
-    loop_delay: Duration
+    loop_delay: Duration,
 }
 
 impl SpeedLimiter {
@@ -14,15 +14,14 @@ impl SpeedLimiter {
         SpeedLimiter {
             duration_between_action: frames_per_duration,
             last_time: Instant::now(),
-            loop_delay: Duration::from_millis(5)
+            loop_delay: Duration::from_millis(5),
         }
     }
     pub fn tick<F: FnMut() -> ()>(&mut self, mut f: F) {
         if Instant::now() - self.last_time >= self.duration_between_action {
             f();
             self.last_time = Instant::now();
-        }
-        else {
+        } else {
             sleep(self.loop_delay)
         }
     }

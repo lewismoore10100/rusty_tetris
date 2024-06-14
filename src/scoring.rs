@@ -1,4 +1,4 @@
-pub fn calculate_score(removed_rows: u32) -> u32{
+pub fn calculate_score(removed_rows: u32) -> u32 {
     match removed_rows {
         1 => 40,
         2 => 100,

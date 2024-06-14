@@ -4,7 +4,6 @@ use blue_engine::uniform_type::Array4;
 use crate::tetris_block::TetrisBlock;
 
 pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
-
     blocks.iter().for_each(|block| {
         let block_in_object_store = match objects.get_mut(&block.id) {
             Some(b) => b,
@@ -41,7 +40,7 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                     renderer,
                 ).unwrap();
                 let new_object = objects.get_mut(&block.id).unwrap();
-                new_object.uniform_color = Array4 {data: block.color};
+                new_object.uniform_color = Array4 { data: block.color };
                 new_object
             }
         };
@@ -52,11 +51,9 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
         if block_in_object_store.position.x != new_x || block_in_object_store.position.y != new_y {
             block_in_object_store.set_position(new_x, new_y, 0.0);
         }
-
     });
 
     if objects.len() != blocks.len() {
         objects.retain(|b, _| blocks.iter().any(|b2| b2.id.eq(b)));
     }
-
 }

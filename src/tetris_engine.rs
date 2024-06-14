@@ -1,12 +1,14 @@
 extern crate rand;
 
 use rand::Rng;
+
 use Direction::RIGHT;
+
 use crate::direction::Direction;
 use crate::direction::Direction::{DOWN, LEFT};
 use crate::scoring::calculate_score;
 use crate::shapes::l::L;
-use crate::shapes::{PlayableShape};
+use crate::shapes::PlayableShape;
 use crate::shapes::s::S;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
@@ -16,10 +18,10 @@ pub struct TetrisEngine {
     current_shape: Box<dyn PlayableShape>,
     merged_blocks: Vec<TetrisBlock>,
     generate_next_shape: fn() -> Box<dyn PlayableShape>,
-    score: u32
+    score: u32,
 }
 
-fn random_shape_generator() -> Box<dyn PlayableShape>{
+fn random_shape_generator() -> Box<dyn PlayableShape> {
     let mut rng = rand::thread_rng();
     let random_number = rng.gen_range(0..4);
 
@@ -38,7 +40,7 @@ impl TetrisEngine {
             current_shape: Box::new(Square::new()),
             merged_blocks: vec![],
             generate_next_shape: random_shape_generator,
-            score: 0
+            score: 0,
         }
     }
 
@@ -47,7 +49,7 @@ impl TetrisEngine {
             current_shape: shape_generator(),
             merged_blocks: initial_state,
             generate_next_shape: shape_generator,
-            score: 0
+            score: 0,
         }
     }
 
@@ -60,9 +62,7 @@ impl TetrisEngine {
 
         if self.can_move(new_position.blocks()) {
             self.current_shape = new_position;
-        }
-        else
-        {
+        } else {
             self.current_shape.blocks().iter().for_each(|b| {
                 let new_b = b.clone();
                 self.merged_blocks.push(new_b);
@@ -75,7 +75,7 @@ impl TetrisEngine {
     pub fn move_left(&mut self) {
         let new_position = self.current_shape.move_direction(LEFT);
 
-        if self.can_move(new_position.blocks()){
+        if self.can_move(new_position.blocks()) {
             self.current_shape = new_position;
         }
     }
@@ -83,7 +83,7 @@ impl TetrisEngine {
     pub fn move_right(&mut self) {
         let new_position = self.current_shape.move_direction(RIGHT);
 
-        if self.can_move(new_position.blocks()){
+        if self.can_move(new_position.blocks()) {
             self.current_shape = new_position;
         }
     }
@@ -92,11 +92,9 @@ impl TetrisEngine {
         loop {
             let new_position = self.current_shape.move_direction(DOWN);
 
-            if self.can_move(new_position.blocks()){
+            if self.can_move(new_position.blocks()) {
                 self.current_shape = new_position;
-            }
-            else
-            {
+            } else {
                 self.tick();
                 break;
             }
@@ -113,7 +111,7 @@ impl TetrisEngine {
     pub fn rotate(&mut self) {
         let new_position = self.current_shape.rotate();
 
-        if self.can_move(new_position.blocks()){
+        if self.can_move(new_position.blocks()) {
             self.current_shape = new_position;
         }
     }
@@ -143,21 +141,18 @@ impl TetrisEngine {
         self.score = self.score + calculate_score(removed_rows);
     }
 
-    fn remove_completed_rows_starting_from(&mut self, row: i32) -> u32{
+    fn remove_completed_rows_starting_from(&mut self, row: i32) -> u32 {
         if row > 19 {
             return 0;
         }
 
         if self.merged_blocks.iter().filter(|b| b.y == row).count() == 10 {
-            self.merged_blocks.retain(|b| { b.y != row});
-            self.merged_blocks.iter_mut().for_each(|b| { if b.y > row {b.y -= 1}});
+            self.merged_blocks.retain(|b| { b.y != row });
+            self.merged_blocks.iter_mut().for_each(|b| { if b.y > row { b.y -= 1 } });
             return self.remove_completed_rows_starting_from(row) + 1;
-        }
-        else {
-            return self.remove_completed_rows_starting_from(row+1);
+        } else {
+            return self.remove_completed_rows_starting_from(row + 1);
         }
     }
-
-
 }
 

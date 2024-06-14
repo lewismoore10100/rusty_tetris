@@ -1,5 +1,5 @@
-use crate::tetris_block::TetrisBlock;
 use crate::direction::Direction;
+use crate::tetris_block::TetrisBlock;
 
 pub mod l;
 pub mod square;
@@ -8,17 +8,16 @@ pub mod s;
 
 #[derive(Clone)]
 pub struct BlockGroup {
-    pub blocks: [TetrisBlock; 4]
+    pub blocks: [TetrisBlock; 4],
 }
 
 impl BlockGroup {
-
     fn move_direction(&self, direction: Direction) -> BlockGroup {
         BlockGroup {
             blocks: match direction {
-                Direction::RIGHT => {self.all_moved(1, 0)}
-                Direction::LEFT => {self.all_moved(-1, 0)}
-                Direction::DOWN => {self.all_moved(0, -1)}
+                Direction::RIGHT => { self.all_moved(1, 0) }
+                Direction::LEFT => { self.all_moved(-1, 0) }
+                Direction::DOWN => { self.all_moved(0, -1) }
             }
         }
     }

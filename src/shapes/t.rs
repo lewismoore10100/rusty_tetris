@@ -2,7 +2,6 @@ use crate::direction::Direction;
 use crate::rotation_position::RotationPosition;
 use crate::rotation_position::RotationPosition::{E, N, S, W};
 use crate::shapes::{BlockGroup, PlayableShape};
-use crate::shapes::l::L;
 use crate::tetris_block::TetrisBlock;
 
 pub struct T {
@@ -27,10 +26,9 @@ impl T {
 }
 
 impl PlayableShape for T {
-
-    fn move_direction(&self, direction: Direction)-> Box<dyn PlayableShape> {
+    fn move_direction(&self, direction: Direction) -> Box<dyn PlayableShape> {
         let new_position = self.block_group.move_direction(direction);
-        Box::new(T{ block_group: new_position, rotation_position: self.rotation_position.clone()})
+        Box::new(T { block_group: new_position, rotation_position: self.rotation_position.clone() })
     }
 
     fn rotate(&self) -> Box<dyn PlayableShape> {
@@ -73,7 +71,7 @@ impl PlayableShape for T {
             block_group: BlockGroup {
                 blocks: rotated_block
             },
-            rotation_position: self.rotation_position.next_position()
+            rotation_position: self.rotation_position.next_position(),
         })
     }
 
