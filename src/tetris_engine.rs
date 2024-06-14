@@ -61,7 +61,8 @@ impl TetrisEngine {
         if self.can_move(new_position.blocks()) {
             self.current_shape = new_position;
         }
-        else {
+        else
+        {
             self.current_shape.blocks().iter().for_each(|b| {
                 let new_b = b.clone();
                 self.merged_blocks.push(new_b);
