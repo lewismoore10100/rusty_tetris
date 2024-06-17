@@ -1,6 +1,6 @@
 use crate::direction::Direction;
 use crate::rotation_position::RotationPosition;
-use crate::rotation_position::RotationPosition::N;
+use crate::rotation_position::RotationPosition::{E, N};
 use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
@@ -42,6 +42,14 @@ impl PlayableShape for S {
                     self.block_group.blocks[3].moved(-1, 0)
                 ]
             }
+            E => {
+                [
+                    self.block_group.blocks[0].moved(0, 1),
+                    self.block_group.blocks[1].moved(1, 2),
+                    self.block_group.blocks[2].moved(0, -1),
+                    self.block_group.blocks[3].moved(1, 0)
+                ]
+            }
             _ => { self.block_group.blocks.clone() }
         };
 
@@ -49,7 +57,11 @@ impl PlayableShape for S {
             block_group: BlockGroup {
                 blocks: rotated_block
             },
-            rotation_position: self.rotation_position.next_position(),
+            rotation_position: match self.rotation_position {
+                N => {E}
+                E => {N}
+                _ => {N}
+            }
         })
     }
 

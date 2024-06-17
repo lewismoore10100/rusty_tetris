@@ -569,6 +569,39 @@ fn a_s_can_be_rotated_90_degrees() {
     ))
 }
 
+#[test]
+fn a_s_can_be_rotated_back_and_forth() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], s_generator);
+
+    tetris_engine.tick();
+    run(|| { tetris_engine.rotate() }, 3);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 17),
+                          TetrisBlock::new(4, 16),
+                          TetrisBlock::new(3, 18),
+                          TetrisBlock::new(3, 17),
+                      ],
+    ))
+}
+
+#[test]
+fn a_s_can_be_rotated_90_degrees_and_back() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], s_generator);
+
+    tetris_engine.tick();
+    run(|| { tetris_engine.rotate() }, 2);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(5, 18),
+                          TetrisBlock::new(3, 17),
+                          TetrisBlock::new(4, 17),
+                      ],
+    ))
+}
 
 #[test]
 fn completing_a_single_row_scores_40_points() {
