@@ -37,7 +37,12 @@ fn main() {
                 render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
             }
 
-            if input.key_pressed(KeyCode::ArrowDown) {
+            if input.key_held(KeyCode::ArrowDown) {
+                tetris_engine.move_down();
+                render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
+            }
+
+            if input.key_pressed(KeyCode::Space) {
                 tetris_engine.drop();
                 render_blocks(tetris_engine.blocks_for_rendering(), objects, renderer);
             }

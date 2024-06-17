@@ -88,6 +88,14 @@ impl TetrisEngine {
         }
     }
 
+    pub fn move_down(&mut self) {
+        let new_position = self.current_shape.move_direction(DOWN);
+
+        if self.can_move(new_position.blocks()) {
+            self.current_shape = new_position;
+        }
+    }
+
     pub fn drop(&mut self) {
         loop {
             let new_position = self.current_shape.move_direction(DOWN);

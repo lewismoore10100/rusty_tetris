@@ -168,7 +168,7 @@ fn current_shape_can_not_overlap_existing_blocks_when_moving_left() {
 }
 
 #[test]
-fn block_drops_when_user_presses_down() {
+fn block_drops_when_user_presses_drop() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
 
     tetris_engine.drop();
@@ -183,6 +183,22 @@ fn block_drops_when_user_presses_down() {
                           TetrisBlock::new(5, 1),
                           TetrisBlock::new(4, 0),
                           TetrisBlock::new(5, 0),
+                      ],
+    ));
+}
+
+#[test]
+fn block_moves_down_when_user_presses_down() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
+
+    tetris_engine.move_down();
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(5, 18),
+                          TetrisBlock::new(4, 17),
+                          TetrisBlock::new(5, 17),
                       ],
     ));
 }
