@@ -656,6 +656,23 @@ fn a_z_can_be_rotated_90_degrees() {
 }
 
 #[test]
+fn a_z_can_be_rotated_90_degrees_and_back() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], z_generator);
+
+    tetris_engine.tick();
+    run(|| { tetris_engine.rotate() }, 2);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(3, 18),
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(4, 17),
+                          TetrisBlock::new(5, 17),
+                      ],
+    ))
+}
+
+#[test]
 fn completing_a_single_row_scores_40_points() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![
         TetrisBlock::new(0, 0),

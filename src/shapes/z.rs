@@ -40,7 +40,14 @@ impl PlayableShape for Z {
                     self.block_group.blocks[3].moved(-2, -1)
                 ]
             }
-            true => { self.block_group.blocks.clone() }
+            true => {
+                [
+                    self.block_group.blocks[0].moved(-1, 0),
+                    self.block_group.blocks[1].moved(0, 1),
+                    self.block_group.blocks[2].moved(1, 0),
+                    self.block_group.blocks[3].moved(2, 1)
+                ]
+            }
         };
 
         Box::new(Z {
