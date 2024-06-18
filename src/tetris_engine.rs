@@ -12,6 +12,7 @@ use crate::shapes::PlayableShape;
 use crate::shapes::s::S;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
+use crate::shapes::z::Z;
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
@@ -23,13 +24,14 @@ pub struct TetrisEngine {
 
 fn random_shape_generator() -> Box<dyn PlayableShape> {
     let mut rng = rand::thread_rng();
-    let random_number = rng.gen_range(0..4);
+    let random_number = rng.gen_range(0..5);
 
     match random_number {
         0 => Box::new(Square::new()),
         1 => Box::new(T::new()),
         2 => Box::new(L::new()),
         3 => Box::new(S::new()),
+        4 => Box::new(Z::new()),
         _ => Box::new(Square::new())
     }
 }

@@ -3,9 +3,14 @@ use crate::shapes::PlayableShape;
 use crate::shapes::s::S;
 use crate::shapes::square::Square;
 use crate::shapes::t::T;
+use crate::shapes::z::Z;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;
+
+fn z_generator() -> Box<dyn PlayableShape> {
+    Box::new(Z::new())
+}
 
 fn s_generator() -> Box<dyn PlayableShape> {
     Box::new(S::new())
@@ -615,6 +620,19 @@ fn a_s_can_be_rotated_90_degrees_and_back() {
                           TetrisBlock::new(5, 18),
                           TetrisBlock::new(3, 17),
                           TetrisBlock::new(4, 17),
+                      ],
+    ))
+}
+
+fn on_first_tick_a_single_z_is_put_into_play() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], z_generator);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(3, 19),
+                          TetrisBlock::new(4, 19),
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(5, 18),
                       ],
     ))
 }

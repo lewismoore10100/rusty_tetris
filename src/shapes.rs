@@ -5,6 +5,7 @@ pub mod l;
 pub mod square;
 pub mod t;
 pub mod s;
+pub mod z;
 
 #[derive(Clone)]
 pub struct BlockGroup {
