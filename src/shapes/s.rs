@@ -1,13 +1,11 @@
 use crate::direction::Direction;
-use crate::rotation_position::RotationPosition;
-use crate::rotation_position::RotationPosition::{E, N};
 use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
 #[derive(Clone)]
 pub struct S {
     pub block_group: BlockGroup,
-    pub rotation_position: RotationPosition,
+    pub rotated: bool,
 }
 
 impl S {
@@ -21,7 +19,7 @@ impl S {
                     TetrisBlock::new_with_color(4, 18, [1f32, 0f32, 1f32, 1f32]),
                 ]
             },
-            rotation_position: N,
+            rotated: false,
         }
     }
 }
@@ -29,12 +27,12 @@ impl S {
 impl PlayableShape for S {
     fn move_direction(&self, direction: Direction) -> Box<dyn PlayableShape> {
         let new_position = self.block_group.move_direction(direction);
-        Box::new(S { block_group: new_position, rotation_position: self.rotation_position.clone() })
+        Box::new(S { block_group: new_position, rotated: self.rotated })
     }
 
     fn rotate(&self) -> Box<dyn PlayableShape> {
-        let rotated_block = match self.rotation_position {
-            N => {
+        let rotated_block = match self.rotated {
+            false => {
                 [
                     self.block_group.blocks[0].moved(0, -1),
                     self.block_group.blocks[1].moved(-1, -2),
@@ -42,7 +40,7 @@ impl PlayableShape for S {
                     self.block_group.blocks[3].moved(-1, 0)
                 ]
             }
-            E => {
+            true => {
                 [
                     self.block_group.blocks[0].moved(0, 1),
                     self.block_group.blocks[1].moved(1, 2),
@@ -50,18 +48,13 @@ impl PlayableShape for S {
                     self.block_group.blocks[3].moved(1, 0)
                 ]
             }
-            _ => { self.block_group.blocks.clone() }
         };
 
         Box::new(S {
             block_group: BlockGroup {
                 blocks: rotated_block
             },
-            rotation_position: match self.rotation_position {
-                N => {E}
-                E => {N}
-                _ => {N}
-            }
+            rotated: !self.rotated
         })
     }
 
