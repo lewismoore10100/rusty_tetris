@@ -1,6 +1,4 @@
 use crate::direction::Direction;
-use crate::rotation_position::RotationPosition;
-use crate::rotation_position::RotationPosition::{E, N};
 use crate::shapes::{BlockGroup, PlayableShape};
 use crate::tetris_block::TetrisBlock;
 
@@ -34,8 +32,15 @@ impl PlayableShape for Z {
 
     fn rotate(&self) -> Box<dyn PlayableShape> {
         let rotated_block = match self.rotated {
+            false => {
+                [
+                    self.block_group.blocks[0].moved(1, 0),
+                    self.block_group.blocks[1].moved(0, -1),
+                    self.block_group.blocks[2].moved(-1, 0),
+                    self.block_group.blocks[3].moved(-2, -1)
+                ]
+            }
             true => { self.block_group.blocks.clone() }
-            false => { self.block_group.blocks.clone() }
         };
 
         Box::new(Z {
