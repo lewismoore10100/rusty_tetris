@@ -7,6 +7,7 @@ use Direction::RIGHT;
 use crate::direction::Direction;
 use crate::direction::Direction::{DOWN, LEFT};
 use crate::scoring::calculate_score;
+use crate::shapes::i::I;
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
 use crate::shapes::s::S;
@@ -24,7 +25,7 @@ pub struct TetrisEngine {
 
 fn random_shape_generator() -> Box<dyn PlayableShape> {
     let mut rng = rand::thread_rng();
-    let random_number = rng.gen_range(0..5);
+    let random_number = rng.gen_range(0..6);
 
     match random_number {
         0 => Box::new(Square::new()),
@@ -32,6 +33,7 @@ fn random_shape_generator() -> Box<dyn PlayableShape> {
         2 => Box::new(L::new()),
         3 => Box::new(S::new()),
         4 => Box::new(Z::new()),
+        5 => Box::new(I::new()),
         _ => Box::new(Square::new())
     }
 }
@@ -39,7 +41,7 @@ fn random_shape_generator() -> Box<dyn PlayableShape> {
 impl TetrisEngine {
     pub fn new() -> TetrisEngine {
         TetrisEngine {
-            current_shape: Box::new(Square::new()),
+            current_shape: random_shape_generator(),
             merged_blocks: vec![],
             generate_next_shape: random_shape_generator,
             score: 0,

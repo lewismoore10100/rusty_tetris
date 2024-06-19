@@ -1,3 +1,4 @@
+use crate::shapes::i::I;
 use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
 use crate::shapes::s::S;
@@ -7,6 +8,10 @@ use crate::shapes::z::Z;
 use crate::test_utils::{are_equal, run};
 use crate::tetris_block::TetrisBlock;
 use crate::tetris_engine::TetrisEngine;
+
+fn i_generator() -> Box<dyn PlayableShape> {
+    Box::new(I::new())
+}
 
 fn z_generator() -> Box<dyn PlayableShape> {
     Box::new(Z::new())
@@ -634,6 +639,19 @@ fn on_first_tick_a_single_z_is_put_into_play() {
                           TetrisBlock::new(4, 19),
                           TetrisBlock::new(4, 18),
                           TetrisBlock::new(5, 18),
+                      ],
+    ))
+}
+
+fn on_first_tick_a_single_i_is_put_into_play() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], i_generator);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 19),
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(4, 17),
+                          TetrisBlock::new(4, 16),
                       ],
     ))
 }
