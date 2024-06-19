@@ -6,7 +6,7 @@ A Test Driven, Rust implementation of the classic Tetris game, using Blue Engine
 Controls:
 * Left / Right / Down Arrow to move
 * Left Ctrl/Control to rotate current shape
-* Space to drop block
+* Space to drop current shape
 
 ![Rusty Tetris Screenshot](screenshot.PNG)
 
