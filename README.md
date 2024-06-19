@@ -1,7 +1,12 @@
 rusty_tetris
 ------------
 
-A Rust implementation of the classic Tetris game, using Blue Engine graphics engine
+A Test Driven, Rust implementation of the classic Tetris game, using Blue Engine graphics engine
+
+Controls:
+* Left / Right / Down Arrow to move
+* Left Ctrl/Control to rotate current shape
+* Space to drop block
 
 ![Rusty Tetris Screenshot](screenshot.PNG)
 
