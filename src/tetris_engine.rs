@@ -28,13 +28,7 @@ fn random_shape_generator() -> Box<dyn PlayableShape> {
     let random_number = rng.gen_range(0..6);
 
     match random_number {
-        0 => Box::new(Square::new()),
-        1 => Box::new(T::new()),
-        2 => Box::new(L::new()),
-        3 => Box::new(S::new()),
-        4 => Box::new(Z::new()),
-        5 => Box::new(I::new()),
-        _ => Box::new(Square::new())
+        _ => Box::new(I::new()),
     }
 }
 

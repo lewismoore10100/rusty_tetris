@@ -32,9 +32,28 @@ impl PlayableShape for I {
 
     fn rotate(&self) -> Box<dyn PlayableShape> {
 
+        let new_position = match self.rotated {
+            false => {
+                [
+                    self.block_group.blocks[0].moved(2, -2),
+                    self.block_group.blocks[1].moved(1, -1),
+                    self.block_group.blocks[2].moved(0, 0),
+                    self.block_group.blocks[3].moved(-1, 1)
+                ]
+            }
+            true => {
+                [
+                    self.block_group.blocks[0].moved(-2, 2),
+                    self.block_group.blocks[1].moved(-1, 1),
+                    self.block_group.blocks[2].moved(0, 0),
+                    self.block_group.blocks[3].moved(1, -1)
+                ]
+            }
+        };
+
         Box::new(I {
             block_group: BlockGroup {
-                blocks: self.block_group.blocks.clone()
+                blocks: new_position
             },
             rotated: !self.rotated
         })

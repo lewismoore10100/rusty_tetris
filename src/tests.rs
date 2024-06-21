@@ -657,6 +657,40 @@ fn on_first_tick_a_single_i_is_put_into_play() {
 }
 
 #[test]
+fn a_i_can_be_roated_90_degrees() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], i_generator);
+
+    tetris_engine.tick();
+    run(|| { tetris_engine.rotate() }, 1);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(6, 16),
+                          TetrisBlock::new(5, 16),
+                          TetrisBlock::new(4, 16),
+                          TetrisBlock::new(3, 16),
+                      ],
+    ))
+}
+
+#[test]
+fn a_i_can_be_rotated_90_degrees_and_back() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], i_generator);
+
+    tetris_engine.tick();
+    run(|| { tetris_engine.rotate() }, 2);
+
+    assert!(are_equal(&tetris_engine.blocks_for_rendering(),
+                      &vec![
+                          TetrisBlock::new(4, 18),
+                          TetrisBlock::new(4, 17),
+                          TetrisBlock::new(4, 16),
+                          TetrisBlock::new(4, 15),
+                      ],
+    ))
+}
+
+#[test]
 fn a_z_can_be_rotated_90_degrees() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![], z_generator);
 
