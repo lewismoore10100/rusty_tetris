@@ -8,12 +8,7 @@ use crate::direction::Direction;
 use crate::direction::Direction::{DOWN, LEFT};
 use crate::scoring::calculate_score;
 use crate::shapes::i::I;
-use crate::shapes::l::L;
 use crate::shapes::PlayableShape;
-use crate::shapes::s::S;
-use crate::shapes::square::Square;
-use crate::shapes::t::T;
-use crate::shapes::z::Z;
 use crate::tetris_block::TetrisBlock;
 
 pub struct TetrisEngine {
