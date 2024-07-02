@@ -7,3 +7,4 @@ mod direction;
 mod scoring;
 #[cfg(test)]
 mod tests;
+mod tetris_grid;
