@@ -9,10 +9,11 @@ pub fn TetrisGrid() -> impl IntoView {
     view! {
         <div id="render_grid">
             {
-                (0..20).map(|y| {
+                let blocks = engine.with(|e| e.blocks_for_rendering());
+                (0..20).rev().map(|y| {
                     (0..10).map(|x| view!{
                         <div>
-                        { if engine.with(|e| e.blocks_for_rendering()).iter().any(|b| b.x == x && b.y == y)
+                        { if blocks.iter().any(|b| b.x == x && b.y == y)
                             { "X" } else { "" }
                         }
                         </div>
