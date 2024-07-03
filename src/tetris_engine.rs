@@ -113,10 +113,10 @@ impl TetrisEngine {
         }
     }
 
-    pub fn blocks_for_rendering(&mut self) -> Vec<&TetrisBlock> {
-        let mut all_blocks: Vec<&TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
-        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b));
-        self.merged_blocks.iter().for_each(|b| all_blocks.push(b));
+    pub fn blocks_for_rendering(&self) -> Vec<TetrisBlock> {
+        let mut all_blocks: Vec<TetrisBlock> = Vec::with_capacity(self.current_shape.blocks().len() + self.merged_blocks.len());
+        self.current_shape.blocks().iter().for_each(|b| all_blocks.push(b.clone()));
+        self.merged_blocks.iter().for_each(|b| all_blocks.push(b.clone()));
         all_blocks
     }
 
