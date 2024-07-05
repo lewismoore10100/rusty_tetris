@@ -1,7 +1,7 @@
 use blue_engine::{ObjectSettings, ObjectStorage, Renderer, Vertex};
 use blue_engine::uniform_type::Array4;
 
-use crate::tetris_block::TetrisBlock;
+use crate::tetris_block::{COLOR, TetrisBlock};
 
 pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
     blocks.iter().for_each(|block| {
@@ -40,7 +40,7 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
                     renderer,
                 ).unwrap();
                 let new_object = objects.get_mut(&block.id).unwrap();
-                new_object.uniform_color = Array4 { data: block.color };
+                new_object.uniform_color = Array4 { data: calculate_color(&block.color) };
                 new_object
             }
         };
@@ -55,5 +55,16 @@ pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, ren
 
     if objects.len() != blocks.len() {
         objects.retain(|b, _| blocks.iter().any(|b2| b2.id.eq(b)));
+    }
+}
+
+fn calculate_color(color: &COLOR) -> [f32; 4]{
+    match color {
+        COLOR::BLUE => {[0f32, 0f32, 1f32, 1f32]}
+        COLOR::GREEN => {[0f32, 1f32, 0f32, 1f32]}
+        COLOR::YELLOW => {[1f32, 1f32, 0f32, 1f32]}
+        COLOR::RED => {[1f32, 0f32, 0f32, 1f32]}
+        COLOR::ORANGE => {[1f32, 0.5f32, 0f32, 1f32]}
+        COLOR::TURQUOISE => {[0.25f32, 1f32, 1f32, 1f32]}
     }
 }

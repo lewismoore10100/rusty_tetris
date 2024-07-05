@@ -1,7 +1,7 @@
 use leptos::*;
-use crate::tetris_grid::TetrisGrid;
+use crate::tetris_web_render::TetrisGame;
 
-mod tetris_grid;
+mod tetris_web_render;
 mod game_engine_setup;
 mod tetris_block;
 mod render_blocks;
@@ -14,5 +14,5 @@ mod scoring;
 fn main() {
     console_error_panic_hook::set_once();
 
-    mount_to_body(|| view! { <TetrisGrid/> })
+    mount_to_body(|| view! { <TetrisGame/> })
 }

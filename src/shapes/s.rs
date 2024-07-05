@@ -1,6 +1,6 @@
 use crate::direction::Direction;
 use crate::shapes::{BlockGroup, PlayableShape};
-use crate::tetris_block::TetrisBlock;
+use crate::tetris_block::{COLOR, TetrisBlock};
 
 #[derive(Clone)]
 pub struct S {
@@ -13,10 +13,10 @@ impl S {
         S {
             block_group: BlockGroup {
                 blocks: [
-                    TetrisBlock::new_with_color(4, 19, [1f32, 0f32, 1f32, 1f32]),
-                    TetrisBlock::new_with_color(5, 19, [1f32, 0f32, 1f32, 1f32]),
-                    TetrisBlock::new_with_color(3, 18, [1f32, 0f32, 1f32, 1f32]),
-                    TetrisBlock::new_with_color(4, 18, [1f32, 0f32, 1f32, 1f32]),
+                    TetrisBlock::new_with_color(4, 19, COLOR::GREEN),
+                    TetrisBlock::new_with_color(5, 19, COLOR::GREEN),
+                    TetrisBlock::new_with_color(3, 18, COLOR::GREEN),
+                    TetrisBlock::new_with_color(4, 18, COLOR::GREEN),
                 ]
             },
             rotated: false,

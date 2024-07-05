@@ -2,7 +2,7 @@ use crate::direction::Direction;
 use crate::rotation_position::RotationPosition;
 use crate::rotation_position::RotationPosition::{E, N, S, W};
 use crate::shapes::{BlockGroup, PlayableShape};
-use crate::tetris_block::TetrisBlock;
+use crate::tetris_block::{COLOR, TetrisBlock};
 
 pub struct T {
     pub block_group: BlockGroup,
@@ -14,10 +14,10 @@ impl T {
         T {
             block_group: BlockGroup {
                 blocks: [
-                    TetrisBlock::new_with_color(5, 19, [0f32, 1f32, 0f32, 1f32]),
-                    TetrisBlock::new_with_color(4, 18, [0f32, 1f32, 0f32, 1f32]),
-                    TetrisBlock::new_with_color(5, 18, [0f32, 1f32, 0f32, 1f32]),
-                    TetrisBlock::new_with_color(6, 18, [0f32, 1f32, 0f32, 1f32]),
+                    TetrisBlock::new_with_color(5, 19, COLOR::RED),
+                    TetrisBlock::new_with_color(4, 18, COLOR::RED),
+                    TetrisBlock::new_with_color(5, 18, COLOR::RED),
+                    TetrisBlock::new_with_color(6, 18, COLOR::RED),
                 ]
             },
             rotation_position: N,
