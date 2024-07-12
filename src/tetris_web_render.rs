@@ -40,6 +40,9 @@ pub fn TetrisGame() -> impl IntoView {
 
 
     view! {
+        <h1>
+            {move || format!("Score: {}", engine.with(|e| e.score()))}
+        </h1>
         <div id="render_grid">
             {move || {
                 let blocks = engine.with(|e| e.blocks_for_rendering());
