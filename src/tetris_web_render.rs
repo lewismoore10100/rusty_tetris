@@ -3,6 +3,7 @@ use blue_engine::StringBufferTrait;
 use leptos::*;
 use crate::tetris_block::COLOR;
 use crate::tetris_engine::TetrisEngine;
+use leptos::logging::log;
 
 #[component]
 pub fn TetrisGame() -> impl IntoView {
@@ -11,6 +12,31 @@ pub fn TetrisGame() -> impl IntoView {
     set_interval(move || {
         set_engine.update(move |engine| { engine.tick()});
     }, Duration::from_secs(1));
+
+    let handle = window_event_listener(ev::keypress, move |ev| {
+        let code = ev.code();
+        ev.prevent_default();
+
+        match code.as_str() {
+            "KeyA" => {
+                set_engine.update(move |engine| { engine.move_left()});
+            }
+            "KeyD" => {
+                set_engine.update(move |engine| { engine.move_right()});
+            }
+            "KeyS" => {
+                set_engine.update(move |engine| { engine.move_down()});
+            }
+            "Space" => {
+                set_engine.update(move |engine| { engine.rotate()});
+            }
+            "Enter" => {
+                set_engine.update(move |engine| { engine.drop()});
+            }
+            _ => {}
+        }
+    });
+    on_cleanup(move || handle.remove());
 
 
     view! {
