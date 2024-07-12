@@ -3,7 +3,7 @@ use blue_engine::uniform_type::Array4;
 
 use crate::tetris_block::{COLOR, TetrisBlock};
 
-pub fn render_blocks(blocks: Vec<&TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
+pub fn render_blocks(blocks: Vec<TetrisBlock>, objects: &mut ObjectStorage, renderer: &mut Renderer) {
     blocks.iter().for_each(|block| {
         let block_in_object_store = match objects.get_mut(&block.id) {
             Some(b) => b,

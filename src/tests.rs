@@ -35,7 +35,7 @@ fn square_generator() -> Box<dyn PlayableShape> {
 
 #[test]
 fn on_first_tick_a_single_square_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], square_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -335,7 +335,7 @@ fn drops_blocks_above_removed_row() {
 
 #[test]
 fn on_first_tick_a_single_tee_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], t_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -483,7 +483,7 @@ fn a_tee_can_be_rotated_near_the_border_on_the_right() {
 
 #[test]
 fn on_first_tick_a_single_l_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], l_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -566,7 +566,7 @@ fn a_l_can_be_rotated_360_degrees() {
 
 #[test]
 fn on_first_tick_a_single_s_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], s_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], s_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -631,7 +631,7 @@ fn a_s_can_be_rotated_90_degrees_and_back() {
 
 
 fn on_first_tick_a_single_z_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], z_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], z_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
@@ -644,7 +644,7 @@ fn on_first_tick_a_single_z_is_put_into_play() {
 }
 
 fn on_first_tick_a_single_i_is_put_into_play() {
-    let mut tetris_engine = TetrisEngine::with_initial_state(vec![], i_generator);
+    let tetris_engine = TetrisEngine::with_initial_state(vec![], i_generator);
 
     assert!(are_equal(&tetris_engine.blocks_for_rendering(),
                       &vec![
