@@ -27,4 +27,5 @@ Controls:
 
 Run tests: `cargo test`
 
-Run: `cargo run`
+Run Native Implementation: `cargo run --bin native`
+Run Web Implementation `trunk serve`
