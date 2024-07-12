@@ -3,16 +3,25 @@ rusty_tetris
 
 A Test Driven, Rust implementation of the classic Tetris game.
 
+Native Implementation (Blue Engine)
+===================================
+
 Controls:
 * Left / Right / Down Arrow to move
 * Left Ctrl/Control to rotate current shape
 * Space to drop current shape
 
-Supports rendering as a native application, using Blue Engine graphics engine
-
 ![Rusty Tetris Blue Engine Screenshot](screenshot.PNG)
 
-or in the browser as web assembly using leptos
+Web Implementation (Leptos)
+==========================
+
+Controls:
+* (A Key) Move Left
+* (D Key) Move Left
+* (S Key) Move Down
+* (Space) Rotation
+* (Enter) Drop
 
 ![Rusty Tetris Leptos Screenshot](screenshot2.PNG)
 
