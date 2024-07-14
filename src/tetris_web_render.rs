@@ -38,11 +38,14 @@ pub fn TetrisGame() -> impl IntoView {
     });
     on_cleanup(move || handle.remove());
 
+    let game_over_message = move || engine.with(|e| e.is_game_over()).then(|| "Game Over ☹️");
+
 
     view! {
         <h1>
             {move || format!("Score: {}", engine.with(|e| e.score()))}
         </h1>
+        <h2>{game_over_message}</h2>
         <div id="render_grid">
             {move || {
                 let blocks = engine.with(|e| e.blocks_for_rendering());
