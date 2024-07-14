@@ -2,10 +2,8 @@ extern crate rand;
 
 use rand::Rng;
 
-use Direction::RIGHT;
-
 use crate::direction::Direction;
-use crate::direction::Direction::{DOWN, LEFT};
+use crate::direction::Direction::{DOWN, LEFT, RIGHT};
 use crate::scoring::calculate_score;
 use crate::shapes::i::I;
 use crate::shapes::l::L;
@@ -21,6 +19,7 @@ pub struct TetrisEngine {
     merged_blocks: Vec<TetrisBlock>,
     generate_next_shape: fn() -> Box<dyn PlayableShape>,
     score: u32,
+    game_over: bool
 }
 
 fn random_shape_generator() -> Box<dyn PlayableShape> {
@@ -45,6 +44,7 @@ impl TetrisEngine {
             merged_blocks: vec![],
             generate_next_shape: random_shape_generator,
             score: 0,
+            game_over: false
         }
     }
 
@@ -54,6 +54,7 @@ impl TetrisEngine {
             merged_blocks: initial_state,
             generate_next_shape: shape_generator,
             score: 0,
+            game_over: false
         }
     }
 
@@ -62,18 +63,24 @@ impl TetrisEngine {
     }
 
     pub fn tick(&mut self) {
-        let new_position = self.current_shape.move_direction(DOWN);
-
-        if self.can_move(new_position.blocks()) {
-            self.current_shape = new_position;
-        } else {
-            self.current_shape.blocks().iter().for_each(|b| {
-                let new_b = b.clone();
-                self.merged_blocks.push(new_b);
-            });
-            self.remove_completed_rows();
-            self.current_shape = (self.generate_next_shape)()
+        if !self.game_over {
+            let new_position = self.current_shape.move_direction(DOWN);
+        
+            if self.can_move(new_position.blocks()) {
+                self.current_shape = new_position;
+            } else {
+                self.current_shape.blocks().iter().for_each(|b| {
+                    let new_b = b.clone();
+                    self.merged_blocks.push(new_b);
+                });
+                self.remove_completed_rows();
+                self.current_shape = (self.generate_next_shape)();
+                if !self.can_move(self.current_shape.blocks()){
+                    self.game_over = true;
+                }
+            }
         }
+        
     }
 
     pub fn move_left(&mut self) {
@@ -111,6 +118,10 @@ impl TetrisEngine {
                 break;
             }
         }
+    }
+
+    pub fn is_game_over(&self) -> bool {
+        self.game_over
     }
 
     pub fn blocks_for_rendering(&self) -> Vec<TetrisBlock> {

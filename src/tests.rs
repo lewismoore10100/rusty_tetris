@@ -774,6 +774,7 @@ fn completing_a_double_row_scores_100_points() {
     assert_eq!(tetris_engine.score(), 100);
 }
 
+#[test]
 fn completing_a_triple_row_scores_300_points() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![
         TetrisBlock::new(0, 0),
@@ -813,6 +814,7 @@ fn completing_a_triple_row_scores_300_points() {
     assert_eq!(tetris_engine.score(), 300);
 }
 
+#[test]
 fn completing_a_triple_row_scores_1200_points() {
     let mut tetris_engine = TetrisEngine::with_initial_state(vec![
         TetrisBlock::new(0, 0),
@@ -860,4 +862,19 @@ fn completing_a_triple_row_scores_1200_points() {
     run(|| { tetris_engine.tick() }, 20);
 
     assert_eq!(tetris_engine.score(), 1200);
+}
+
+#[test]
+fn the_game_is_over_when_a_new_shape_overlaps_an_existing_block() {
+    let mut tetris_engine = TetrisEngine::with_initial_state(vec![
+        TetrisBlock::new(5, 19),
+        TetrisBlock::new(6, 19),
+        TetrisBlock::new(5, 18),
+        TetrisBlock::new(6, 18),
+        
+    ], square_generator);
+
+    run(|| { tetris_engine.tick() }, 1);
+
+    assert_eq!(tetris_engine.is_game_over(), true);
 }
